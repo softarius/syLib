@@ -1,0 +1,70 @@
+package SYLib27;
+
+{$R *.res}
+{$R 'AddIn_TLB.dcr'}
+{$R 'ActiveDs_TLB.dcr'}
+{$R 'Office_TLB.dcr'}
+{$R 'SpeechLib_TLB.dcr'}
+{$R 'Word_TLB.dcr'}
+{$IFDEF IMPLICITBUILDING This IFDEF should not be used by users}
+{$ALIGN 8}
+{$ASSERTIONS ON}
+{$BOOLEVAL OFF}
+{$DEBUGINFO OFF}
+{$EXTENDEDSYNTAX ON}
+{$IMPORTEDDATA ON}
+{$IOCHECKS ON}
+{$LOCALSYMBOLS OFF}
+{$LONGSTRINGS ON}
+{$OPENSTRINGS ON}
+{$OPTIMIZATION ON}
+{$OVERFLOWCHECKS OFF}
+{$RANGECHECKS OFF}
+{$REFERENCEINFO OFF}
+{$SAFEDIVIDE OFF}
+{$STACKFRAMES OFF}
+{$TYPEDADDRESS OFF}
+{$VARSTRINGCHECKS ON}
+{$WRITEABLECONST OFF}
+{$MINENUMSIZE 1}
+{$IMAGEBASE $400000}
+{$DEFINE RELEASE}
+{$ENDIF IMPLICITBUILDING}
+{$DESCRIPTION 'Sergey Yushinin library'}
+{$IMPLICITBUILD OFF}
+
+requires
+  rtl,
+  vclx,
+  vcl,
+  vclactnband,
+  vcldb,
+  xmlrtl,
+  VclSmp,
+  dsnap,
+  vclimg,
+  IndySystem,
+  IndyCore,
+  IndyProtocols,
+  DesignIde,
+  FIBPlus_D27,
+  EhLib260,
+  frx27,
+  fs27;
+
+contains
+  SY_IBDialogs in 'SY_IBDialogs.pas',
+  syPluginManager in 'syPluginManager.pas',
+  SY_inet in 'SY_inet.pas',
+  syBlobEditor in 'syBlobEditor.pas',
+  syUtils in 'syUtils.pas',
+  syBank in 'syBank.pas',
+  syFIBChat in 'syFIBChat.pas',
+  syStdAction in 'syStdAction.pas',
+  syUtilsEh in 'syUtilsEh.pas',
+  syLib.PackageSplash in 'syLib.PackageSplash.pas',
+  syLib.Buh1C in 'syLib.Buh1C.pas',
+  V82_TLB in 'V82_TLB.pas',
+  pFIBDataDriverEh in '..\ehlib\DataDrivers\FIBDataDriver\pFIBDataDriverEh.pas';
+
+end.

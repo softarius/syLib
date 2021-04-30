@@ -1,0 +1,5 @@
+PREVIEW BITMAP preview.bmp
+FILTER BITMAP filter.bmp
+EXPORT BITMAP export.bmp
+REOPEN BITMAP img\reload.bmp
+EDITDLG bitmap editdlg.bmp
