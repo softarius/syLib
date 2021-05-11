@@ -42,21 +42,17 @@ requires
   vcldb,
   xmlrtl,
   VclSmp,
-  dsnap,
   vclimg,
-  IndySystem,
-  IndyCore,
-  IndyProtocols,
   DesignIde,
   FIBPlus_D26,
   fs26,
   frx26,
   EhLib260,
-  Jcl,
-  JvCore,
-  JvSystem,
-  JvStdCtrls,
-  JvControls;
+  IndySystem,
+  IndyProtocols,
+  IndyCore,
+  frxDB26,
+  fsDB26;
 
 contains
   SY_IBDialogs in 'SY_IBDialogs.pas',

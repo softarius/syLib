@@ -3,7 +3,7 @@ unit SY_inet;
 interface
 
 uses SysUtils, Classes, Controls, Windows, WinInet, Forms, Dialogs,
-  Sy_const, UpdateDlg, XMLDoc, Registry, math, syUtils;
+  Sy_const, UpdateDlg, XMLDoc, Registry, math, syUtils, JvVersionInfo;
 
 function GetUrlContent(Server, Resource: string): widestring;
 
@@ -52,66 +52,6 @@ procedure register;
 
 implementation
 
-// https://stackoverflow.com/questions/17279394/getfileversioninfosize-and-getfileversioninfo-return-nothing
-function FileVersion(const FileName: TFileName): String;
-var
-  VerInfoSize: Cardinal;
-  VerValueSize: Cardinal;
-  Dummy: Cardinal;
-  PVerInfo: Pointer;
-  PVerValue: PVSFixedFileInfo;
-  iLastError: DWord;
-begin
-  Result := '';
-  VerInfoSize := GetFileVersionInfoSize(PChar(FileName), Dummy);
-  if VerInfoSize > 0 then
-  begin
-    GetMem(PVerInfo, VerInfoSize);
-    try
-      if GetFileVersionInfo(PChar(FileName), 0, VerInfoSize, PVerInfo) then
-      begin
-        if VerQueryValue(PVerInfo, '\', Pointer(PVerValue), VerValueSize) then
-          with PVerValue^ do
-            Result := Format('%d.%d.%d.%d', [HiWord(dwFileVersionMS),
-              // Major
-              LoWord(dwFileVersionMS), // Minor
-              HiWord(dwFileVersionLS), // Release
-              LoWord(dwFileVersionLS)]); // Build
-      end
-      else
-      begin
-        iLastError := GetLastError;
-        Result := Format('GetFileVersionInfo failed: (%d) %s',
-          [iLastError, SysErrorMessage(iLastError)]);
-      end;
-    finally
-      FreeMem(PVerInfo, VerInfoSize);
-    end;
-  end
-  else
-  begin
-    iLastError := GetLastError;
-    Result := Format('GetFileVersionInfo failed: (%d) %s',
-      [iLastError, SysErrorMessage(iLastError)]);
-  end;
-end;
-
-function CanonicalVersion(version: string): string;
-var
-  sl: TStrings;
-  i: integer;
-begin
-  sl := TStringList.Create();
-  sl.Delimiter := '.';
-  sl.StrictDelimiter := True;
-  sl.DelimitedText := version;
-  for i := 0 to sl.Count - 1 do
-  begin
-    Result := Result + Format('%.*d', [4, StrToInt(sl[i])]);
-  end;
-  sl.Free;
-end;
-
 /// <summary>
 /// Копирует содержимое, возвращаемое из Resource с сервера Server в строку
 /// </summary>
@@ -120,7 +60,7 @@ var
   hInet, hConnect, hRequest: HINTERNET;
   bRead: boolean;
   Data: array [1 .. 1024] of AnsiChar;
-  dwBytesRead: Cardinal;
+  dwBytesRead: cardinal;
 begin
   Result := '';
   hInet := InternetOpen(PChar(Application.title), INTERNET_OPEN_TYPE_PRECONFIG,
@@ -159,9 +99,8 @@ end;
 /// </summary>
 function TUpdaterSY.CheckUpdate(SupressEqualMessage: boolean = false): boolean;
 var
-  SiteVersion, HostName, UrlContent, cashid, CurrentVersion, cSiteVersion,
-    cCurrentVersion: string;
-  // iSiteVersionNum: TLongVersion; FIXME
+  SiteVersion, HostName, UrlContent, cashid: string;
+  iSiteVersionNum: TLongVersion;
   XMLDocument1: TXMLDocument;
   aURLC: TURLComponents;
 begin
@@ -227,33 +166,42 @@ begin
 
   XMLDocument1 := TXMLDocument.Create(Self);
   try
+    // InputQuery('','',UrlContent);
     XMLDocument1.XML.Text := UrlContent;
-    XMLDocument1.Active := True;
+    XMLDocument1.Active := true;
   except
-    MessageDlg(Format(XMLFormatWrong, [HostName, aURLC.lpszUrlPath,
-      fXMLFileName]), mtWarning, [mbOk], 0);
+    MessageDlg(Format(XMLFormatWrong { + #13'-=' + UrlContent + '=-' } ,
+      [HostName, aURLC.lpszUrlPath, fXMLFileName]), mtWarning, [mbOk], 0);
     Exit;
   end;
-  SiteVersion := XMLDocument1.DocumentElement.ChildNodes['version'].Text;
-  CurrentVersion := FileVersion(Application.ExeName);
-  cSiteVersion := CanonicalVersion(SiteVersion);
-  cCurrentVersion := CanonicalVersion(CurrentVersion);
-  Result := cSiteVersion > cCurrentVersion;
 
-  if Result and (uoUpdateIfPresent in Options) and
-    (MessageDlg(Format(SNewVersionPresent, [fURLUpdateInfo, SiteVersion]),
-    mtConfirmation, [mbOk, mbCancel], 0) = mrOk) then
+  with AppVerInfo do
   begin
-    if XMLDocument1.DocumentElement.ChildNodes['setup'].Text <> '' then
-      SetupExe := XMLDocument1.DocumentElement.ChildNodes['setup'].Text;
-    UpdateUrl := fURLUpdateInfo + SetupExe;
-    Update;
-    Result := True;
+    SiteVersion := XMLDocument1.DocumentElement.ChildNodes['version'].Text;
+    iSiteVersionNum := StringToLongVersion(SiteVersion);
+
+    Result := (iSiteVersionNum.MS > FileLongVersion.MS) or
+      ((iSiteVersionNum.MS = FileLongVersion.MS) and
+      (iSiteVersionNum.LS > FileLongVersion.LS));
+
+    if Result and (uoUpdateIfPresent in Options) and
+      (MessageDlg(Format(SNewVersionPresent, [fURLUpdateInfo, SiteVersion]),
+      mtConfirmation, [mbOk, mbCancel], 0) = mrOk) then
+    begin
+      if XMLDocument1.DocumentElement.ChildNodes['setup'].Text <> '' then
+        SetupExe := XMLDocument1.DocumentElement.ChildNodes['setup'].Text;
+      UpdateUrl := fURLUpdateInfo + SetupExe;
+      Update;
+      Result := true;
+    end;
+
+    if (iSiteVersionNum.MS = FileLongVersion.MS) and
+      (iSiteVersionNum.LS = FileLongVersion.LS) and
+      (uoShowEqualMessage in Options) and (not SupressEqualMessage) then
+      MessageDlg(SVersionOk, mtInformation, [mbOk], 0);
+
   end;
 
-  if (cSiteVersion = cCurrentVersion) and (uoShowEqualMessage in Options) and
-    (not SupressEqualMessage) then
-    MessageDlg(SVersionOk, mtInformation, [mbOk], 0);
 end;
 
 constructor TUpdaterSY.Create(AOwner: TComponent);
@@ -287,7 +235,7 @@ begin
   if uoAutoLoadSettings in FOptions then
     LoadSetting;
   if (uoAutoUpdate in FOptions) and (not(csDesigning in ComponentState)) then
-    CheckUpdate(True);
+    CheckUpdate(true);
 end;
 
 procedure TUpdaterSY.LoadSetting;
@@ -332,7 +280,7 @@ begin
   dlgUpgrade.Show;
   dlgUpgrade.StartDownloading(nil);
   Application.ProcessMessages;
-  Result := True;
+  Result := true;
 end;
 
 end.
