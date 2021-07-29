@@ -837,11 +837,13 @@ begin
 
   // Пробуем подключиться тихо. Вдруг получиться ;-)
   FIBDatabase.UseLoginPrompt := false;
+
   try
-    FIBDatabase.Open;
+  FIBDatabase.Open;
   except
     FIBDatabase.UseLoginPrompt := True;
   end;
+    Result:=true;
 
   try
     l := LoadKeyboardLayout('00000409', KLF_ACTIVATE);

@@ -3,7 +3,7 @@ unit syAbout;
 interface
 
 uses Windows, SysUtils, Classes, Graphics, Forms, Controls, StdCtrls,
-  Buttons, ExtCtrls, jpeg, mmSystem, ShellApi,
+  Buttons, ExtCtrls, JvVersionInfo, jpeg, mmSystem, ShellApi,
   Messages, Dialogs, syUtils, Clipbrd;
 
 type
@@ -45,7 +45,7 @@ implementation
 
 procedure TAboutBox.CopyrightClick(Sender: TObject);
 begin
-  ShellExecute(HInstance, 'OPEN', 'http://www.yushinin.ru', '', '', SW_SHOW);
+  ShellExecute(HInstance, 'OPEN', PwideChar(lCompanySite.caption), '', '', SW_SHOW);
 end;
 
 procedure TAboutBox.FormClose(Sender: TObject; var Action: TCloseAction);
@@ -56,7 +56,7 @@ end;
 
 procedure TAboutBox.FormCloseQuery(Sender: TObject; var CanClose: Boolean);
 begin
-  AnimateWindow(Handle, 500, AW_HIDE or AW_BLEND);
+ // AnimateWindow(Handle, 500, AW_HIDE or AW_BLEND);
 end;
 
 procedure TAboutBox.FormCreate(Sender: TObject);
@@ -65,21 +65,20 @@ var
 begin
   Top := Screen.Height div 2 - Height div 2;
   Left := Screen.Width div 2 - Width div 2;
-{  with TjvVersionInfo.Create(Application.ExeName) do
+  with TjvVersionInfo.Create(Application.ExeName) do
   begin
     imgLogo.Picture.Icon.Assign(Application.Icon);
     try
       Image1.Picture.Bitmap.LoadFromResourceName(HInstance, 'ABOUT');
-      Image1.Picture.Bitmap.TransparentColor := Image1.Picture.Bitmap.Canvas.Pixels[0, 0];
+      Image1.Picture.Bitmap.TransparentColor :=
+        Image1.Picture.Bitmap.Canvas.Pixels[0, 0];
 
     except
 
     end;
-    // ProgramIcon.Picture.Icon.Assign(Application.Icon);
 
     lblProductName.caption := ProductName;
     lblProductName.Hint := Values['ProductPage'];
-    // Application.Title;
     lCompanyMail.caption := Values['CompanyMail'];
     lCompanyName.caption := CompanyName;
     lCompanySite.caption := Values['CompanySite'];
@@ -87,30 +86,23 @@ begin
     Version.caption := Format('Версия %d.%d.%d (сборка %d)',
       [FileLongVersion.All[2], FileLongVersion.All[1], FileLongVersion.All[4],
       FileLongVersion.All[3]]);
-    // StaticText1.Caption:=Comments;
     MD5Label.caption := MD5OfFile(Application.ExeName);
 
     with TStringList.Create do
     begin
       try
-         }
-        { if FileExists('history.txt') then
-          SecretPanel1.Lines.LoadFromFile('history.txt');
-          SecretPanel1.Play;
-        }
         if FileExists(ChangeFileExt(Application.ExeName, '.wav')) then
           PlaySound(PChar(ChangeFileExt(Application.ExeName, '.wav')), 0,
             snd_async or snd_loop);
 
         FreeResource(Resource);
 
- {     finally
+      finally
         Free;
 
       end;
-      // lblComments.Caption:=Comments;
     end;
-  end;  }
+  end;
 end;
 
 procedure TAboutBox.FormShow(Sender: TObject);
@@ -122,20 +114,22 @@ end;
 
 procedure TAboutBox.lblProductNameClick(Sender: TObject);
 begin
-  ShellExecute(HInstance, 'OPEN', pWidechar((Sender as TLabel).Hint), '', '', SW_SHOW);
+  ShellExecute(HInstance, 'OPEN', pWidechar((Sender as TLabel).Hint), '',
+    '', SW_SHOW);
 
 end;
 
 procedure TAboutBox.lCompanyMailClick(Sender: TObject);
 begin
-  ShellExecute(HInstance, 'OPEN', pWidechar('mailto:' + (Sender as TLabel).caption), '',
-    '', SW_SHOW);
+  ShellExecute(HInstance, 'OPEN', pWidechar('mailto:' + (Sender as TLabel)
+    .caption), '', '', SW_SHOW);
 
 end;
 
 procedure TAboutBox.lCompanySiteClick(Sender: TObject);
 begin
-  ShellExecute(HInstance, 'OPEN', pWidechar((Sender as TLabel).caption), '', '', SW_SHOW);
+  ShellExecute(HInstance, 'OPEN', pWidechar((Sender as TLabel).caption), '',
+    '', SW_SHOW);
 
 end;
 

@@ -11,7 +11,7 @@ interface
 uses windows, DBGridEh, sysutils, menus, syUtils, forms, prndbgeh, classes,
   DBGridEhImpExp, dialogs, shellApi, controls, syConst, Graphics, ImgList,
   strUtils,
-  syEhGridOptions, syEditDlg, comCtrls, DBCtrls
+  syEhGridOptions, syEditDlg, comCtrls, DBCtrls, syLog
 {$IFDEF FIBPLUS}
     , pFIBDataSet, pFIBProps
 {$ENDIF}
@@ -170,7 +170,8 @@ begin
 
     with (AGrid.DataSource.DataSet as TpFIBDataSet) do
     begin
-      if Conditions.Count > 0 then
+
+      if Conditions.Count >= 1 then
       begin
         miConditions := TDBGridEhMenuItem.Create(Application);
         miConditions.Caption := sConditions;

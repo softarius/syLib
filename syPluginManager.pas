@@ -37,6 +37,7 @@ type
     procedure SetReport(const Value: TfrxReport);
     procedure SetDone(const Value: TNotifyEvent);
     procedure SetAutoloadPlugins(const Value: boolean);
+    procedure SetToolbar(const Value: TToolbar);
     { Private declarations }
   protected
     { Protected declarations }
@@ -65,6 +66,7 @@ type
     property OnDone: TNotifyEvent read FDone write SetDone;
     property FibDatabase: TfibdataBase read FFibdatabase write SetFibdatabase;
     property Report: TfrxReport read FReport write SetReport;
+    property Toolbar: TToolbar read FToolbar write SetToolbar;
   end;
 
 procedure register;
@@ -182,6 +184,7 @@ var
   ac: TActionClientItem;
   bp: TButtonProperties;
   mi: TMenuItem;
+  tb: TToolButton;
 begin
   pl := TpFIBDataSet.Create(self);
 
@@ -233,8 +236,15 @@ begin
           begin
             mi := TMenuItem.Create(self);
             mi.Action := Action;
-            // MenuItem.Add(mi);
             MenuItem.Add(mi);
+          end;
+
+          if Assigned(Toolbar) then
+          begin
+          tb:=TToolButton.Create(Toolbar);
+          tb.Parent:=Toolbar;
+          tb.Left:=Toolbar.Width;
+          tb.Action:=Action;
           end;
 
           if Assigned(ActionBars) and (ActionBars.Count > 0) then
@@ -322,6 +332,11 @@ end;
 procedure TsyPluginManager.SetReport(const Value: TfrxReport);
 begin
   FReport := Value;
+end;
+
+procedure TsyPluginManager.SetToolbar(const Value: TToolbar);
+begin
+  FToolbar := Value;
 end;
 
 end.
