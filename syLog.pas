@@ -6,7 +6,7 @@ uses
   Windows, Messages, SysUtils, Variants, Classes, vcl.Graphics, vcl.Controls, vcl.Forms,
   vcl.Dialogs, vcl.ComCtrls, vcl.ToolWin, vcl.StdCtrls, vcl.ActnList, vcl.ImgList,
   vcl.PlatformDefaultStyleActnCtrls,
-  vcl.ActnMan, dateUtils, System.Actions;
+  vcl.ActnMan, dateUtils, System.Actions, System.ImageList;
 
 type
   TfrmLoger = class(TForm)

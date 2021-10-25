@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<glossary version="5.0" xml:lang="ru" xmlns="http://docbook.org/ns/docbook"
+    xmlns:db="http://docbook.org/ns/docbook" xmlns:xi="http://www.w3.org/2001/XInclude"
+    xmlns:xlink="http://www.w3.org/1999/xlink" xml:id="ITglossary">
+    <title>Термины и определения</title>
+  
+  <glossdiv xml:id="dbglossary">
+     <title>Термины баз данных</title> 
+ 
+    <glossentry xml:id="key">
+        <glossterm>Ключ</glossterm>
+        <glosssee otherterm="pk"/>
+    </glossentry>
+    <glossentry xml:id="keying">
+        <glossterm>Ключевой</glossterm>
+        <glossdef>
+            <para>Представляющий собой <glossterm>первичный ключ</glossterm> </para>
+            <glossseealso otherterm="pk"/>
+        </glossdef>
+    </glossentry>
+    <glossentry xml:id="pk">
+        <glossterm>Первичный ключ</glossterm>
+        <glossdef>
+            <para>Одно или несколько полей (колонок) таблиц, значение которого (которых) позволяет
+                однозначно идентифицировать строку. Проще говоря, это - адрес строки в таблице. </para>
+            <para>Первичный ключ является своего рода главным уникальным индексом, то есть помимо
+                обеспечения уникальности так же обеспечивает быстрый поиск и сортировку</para>
+            <para role="note">Значение ключа не может повторяться для разных строк. При попытке
+                ввести дубликат возникает исключительная ситуация.</para>
+            <glossseealso otherterm="unique_index"/>
+            <glossseealso otherterm="index"/>
+        </glossdef>
+    </glossentry>
+    <glossentry xml:id="modal">
+        <glossterm>Модальный режим</glossterm>
+        <glossdef>
+            <para>Режим показа окна, при котором возможна работа только с этим окном. Для
+                продолжения работы с программой нужно закрыть окно.</para>
+        </glossdef>
+    </glossentry>
+    <glossentry xml:id="unique">
+        <glossterm>Уникальный</glossterm>
+        <glossdef>
+            <para>Не повторяющийся и не допускающий повторений</para>
+            <glossseealso otherterm="unique_index"/>
+        </glossdef>
+    </glossentry>
+    <glossentry xml:id="unique_index">
+        <glossterm>Уникальный индекс</glossterm>
+        <glossdef>
+            <para>Средство обеспечения более быстрого поиска и сортировки, обеспечивающее отсутствие
+                повторяющихся значений (дубликатов)</para>
+            <glossseealso otherterm="pk"/>
+            <glossseealso otherterm="index"/>
+            <glossseealso otherterm="unique"/>
+        </glossdef>
+    </glossentry>
+   
+
+    <glossentry xml:id="index">
+        <glossterm>Индекс</glossterm>
+
+        <glossdef>
+            <para>Средство обеспечения более быстрого поиска и сортировки</para>
+            <glossseealso otherterm="unique_index"/>
+        </glossdef>
+
+
+    </glossentry>
+
+ </glossdiv>
+</glossary>

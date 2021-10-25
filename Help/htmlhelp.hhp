@@ -1,0 +1,30 @@
+[OPTIONS]
+Binary TOC=Yes
+Compatibility=1.1 or later
+Compiled file=promo.chm
+Contents file=toc.hhc
+Default Window=Main
+Default topic=index.html
+Display compile progress=Yes
+Full-text search=Yes
+Language=0x0419 Russian
+Title=Программа оперативного учета для рекламно-производственной компании
+Enhanced decompilation=No
+
+[WINDOWS]
+Main="Программа оперативного учета для рекламно-производственной компании","toc.hhc",,"index.html","index.html",,,,,0x2520,,0x603006,,,,,,,,0
+
+
+[FILES]
+index.html
+ar01s01.html
+ar01s02.html
+ar01s03.html
+ar01s04.html
+ar01s05.html
+
+[ALIAS]
+#include alias.h
+
+[MAP]
+#include context.h

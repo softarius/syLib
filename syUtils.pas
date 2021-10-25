@@ -1,13 +1,18 @@
 unit syUtils;
 
 interface
+
 {$DEFINE FIBPLUS}
 
-uses Windows, Vcl.Graphics, vcl.ActnList, Classes, vcl.Forms, Registry, vcl.ComCtrls,
-  vcl.Controls, vcl.Dialogs, vcl.Menus, SysUtils, GridsEh, dbGridEh, ToolCtrlsEh,
- {$IFDEF FIBPLUS} FIBDatabase, pFIBDataset, pFibDatabase, fib, Fibdataset, FIBQuery, pFIBQuery,
-  frxClass,{$ENDIF} vcl.ActnMan, db, shellApi,
-  IdHashMessageDigest, idHash, symd5,  strUtils, nb30, variants, activex, comobj, inifiles, dateUtils,
+uses Windows, Vcl.Graphics, Vcl.ActnList, Classes, Vcl.Forms, Registry,
+  Vcl.ComCtrls,
+  Vcl.Controls, Vcl.Dialogs, Vcl.Menus, SysUtils, GridsEh, dbGridEh,
+  ToolCtrlsEh,
+{$IFDEF FIBPLUS} FIBDatabase, pFIBDataset, pFibDatabase, fib, Fibdataset,
+  FIBQuery, pFIBQuery,
+  frxClass, {$ENDIF} Vcl.ActnMan, db, shellApi,
+  IdHashMessageDigest, idHash, symd5, strUtils, nb30, variants, activex, comobj,
+  inifiles, dateUtils,
   math;
 
 type
@@ -61,7 +66,7 @@ function BitmapToRegion(Bitmap: TBitmap): HRGN;
 function SilentLogin(FIBDatabase: TpFIBDatabase): boolean;
 procedure ReportsFromBase(ParentMenuItem: TMenuItem; Handler: TNotifyEvent;
   aDatabase: TpFIBDatabase);
- function GetPicklistFromTable(fibDB: TFIBDataBase; aFieldName: string;
+function GetPicklistFromTable(fibDB: TFIBDataBase; aFieldName: string;
   Table1: string; Where: string = '1=1'): string;
 procedure ApplyHiddenConditions(aFibDataset: TFibDataset);
 procedure LoadReport(MenuItem: TComponent; pFIBDatabase1: TpFIBDatabase;
@@ -71,7 +76,6 @@ function SaveReport(pFIBDatabase1: TpFIBDatabase; frxReport: TfrxReport;
 procedure ReportsMenu(ParentMenuItem: TMenuItem; aDatabase: TpFIBDatabase;
   aAction: TCustomAction);
 {$ENDIF}
-
 function DefineColor(dat: TDateTime): TColor;
 function GetRegistryIconHandle(FileName: string): HICON;
 function MD5OfFile(const FileName: string): string;
@@ -80,7 +84,6 @@ function FormatFIO(F, I, O: string; Form: integer = -1): string;
 procedure FillAutolist(Button: TObject; aFieldName: string = '';
   aTable: string = ''; Where: string = ' 1=1 '; KeyListAlso: boolean = false);
 // автословарь
-
 
 function GetVal(s: string; Separator: Char = '='): string;
 function IntegerInWords(N: integer; Female: boolean = false): string;
@@ -201,7 +204,7 @@ begin
   begin
     D := DaysBetween(ToDate, IncMonth(IncYear(aDate, y), m));
 
-    Result := Result + Trim(Format(' %d дней', [D]));
+    Result := Result + trim(Format(' %d дней', [D]));
   end;
 end;
 
@@ -832,26 +835,25 @@ end;
 
 function SilentLogin(FIBDatabase: TpFIBDatabase): boolean;
 var
-  l: hkl;
+ // l: hkl;
+  ErrCode: Cardinal;
 begin
-
   // Пробуем подключиться тихо. Вдруг получиться ;-)
   FIBDatabase.UseLoginPrompt := false;
 
   try
-  FIBDatabase.Open;
+    FIBDatabase.Open;
   except
     FIBDatabase.UseLoginPrompt := True;
+    LoadKeyboardLayout('00000409', KLF_ACTIVATE);
+    // клавиатуру - на английскую раскладку
+
   end;
-    Result:=true;
+  Result := True;
 
   try
-    l := LoadKeyboardLayout('00000409', KLF_ACTIVATE);
-    // клавиатуру - на английскую раскладку
-    FIBDatabase.Open;
-    LoadKeyboardLayout('00000419', KLF_ACTIVATE);
-    // клавиатуру - на русскую раскладку
 
+    FIBDatabase.Open;
   except
     on E: EFIBError do
     begin
@@ -865,6 +867,8 @@ begin
     Application.Terminate;
   FIBDatabase.DefaultTransaction.Active := True;
   Result := FIBDatabase.Connected;
+  LoadKeyboardLayout('00000419', KLF_ACTIVATE);
+  // клавиатуру - на русскую раскладку
 end;
 
 function BitmapToRegion(Bitmap: TBitmap): HRGN;
@@ -944,31 +948,34 @@ function PassGen(MinLength: Byte; MaxLength: Byte): string;
 
 var
   I, l, c: integer;
-  charset:set of (csUpper, csLower, csDigit);
+  charset: set of (csUpper, csLower, csDigit);
 begin
-  l := MinLength + Random(MaxLength - MinLength)+1;
-  charset:=[];
-  while charset<>[csUpper, csLower, csDigit] do
+  l := MinLength + Random(MaxLength - MinLength) + 1;
+  charset := [];
+  while charset <> [csUpper, csLower, csDigit] do
   begin
-  result:='';
-  for I := 1 to l do
-  begin
-    c := Random(3);
-    case c of
-      0: begin
-         Result := Result + Char(ord('A') + Random(26));
-         charset:=charset+[csUpper];
-         end;
-      1: begin
-         Result := Result + Char(ord('a') + Random(26));
-         charset:=charset+[csLower];
-         end;
-      2: begin
-         Result := Result + Char(ord('0') + Random(10));
-         charset:=charset+[csDigit];
-         end;
+    Result := '';
+    for I := 1 to l do
+    begin
+      c := Random(3);
+      case c of
+        0:
+          begin
+            Result := Result + Char(ord('A') + Random(26));
+            charset := charset + [csUpper];
+          end;
+        1:
+          begin
+            Result := Result + Char(ord('a') + Random(26));
+            charset := charset + [csLower];
+          end;
+        2:
+          begin
+            Result := Result + Char(ord('0') + Random(10));
+            charset := charset + [csDigit];
+          end;
+      end;
     end;
-  end;
 
   end;
 end;
@@ -1112,7 +1119,7 @@ end;
 function GetComputerNetName: string;
 var
   Buffer: array [0 .. MAX_COMPUTERNAME_LENGTH] of Char;
-  Size: cardinal;
+  Size: Cardinal;
 begin
   Size := MAX_COMPUTERNAME_LENGTH;
   if GetComputerName(Buffer, Size) then
@@ -1125,27 +1132,27 @@ procedure ColumnColoring(Sender: TObject; Column: TColumnEh; aFont: Tfont;
   var Background: TColor; State: TGridDrawState);
 begin
   try
-  with (Sender as TDBGridEh) do
-  begin
-    if DataSource.dataset.RecNo mod 2 = 0 then
+    with (Sender as TDBGridEh) do
     begin
-      if ( Column.ReadOnly or (Column.Field.FieldKind=fkCalculated)) then
-        Background := clOddReadOnly
+      if DataSource.dataset.RecNo mod 2 = 0 then
+      begin
+        if (Column.ReadOnly or (Column.Field.FieldKind = fkCalculated)) then
+          Background := clOddReadOnly
+        else if STFilter.Visible then
+          Background := clOddFilterColor
+        else
+          Background := clOddColor;
+      end
+      else if (Column.ReadOnly or (Column.Field.FieldKind = fkCalculated)) then
+        Background := clEvenReadOnly
       else if STFilter.Visible then
-        Background := clOddFilterColor
+        Background := clEvenFilterColor
       else
-        Background := clOddColor;
-    end
-    else if ( Column.ReadOnly or (Column.Field.FieldKind=fkCalculated)) then
-      Background := clEvenReadOnly
-    else if STFilter.Visible then
-      Background := clEvenFilterColor
-    else
-      Background := clEvenColor;
-    { if Column.Index<FrozenCols then
-      Background:=clSilver; }
-    // if (not Column.Field.Required) and (not Column.Field.ReadOnly) then AFont.Color:=clTeal;
-  end;
+        Background := clEvenColor;
+      { if Column.Index<FrozenCols then
+        Background:=clSilver; }
+      // if (not Column.Field.Required) and (not Column.Field.ReadOnly) then AFont.Color:=clTeal;
+    end;
   except
 
   end;
@@ -1306,7 +1313,8 @@ begin
 end;
 
 /// Создание или показ дочернего MDI окна
-procedure ChildWindow(Sender: TObject; var aChildForm: TForm; FormClass: TPersistentClass); overload;
+procedure ChildWindow(Sender: TObject; var aChildForm: TForm;
+  FormClass: TPersistentClass); overload;
 begin
   with Sender as TAction do
   begin

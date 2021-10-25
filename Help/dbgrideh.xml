@@ -1,0 +1,635 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!DOCTYPE section [
+<!ENTITY путь "C:/projects/DelphiLibs/syLib/Help/">
+]>
+<section version="5.0" xml:lang="ru" xmlns="http://docbook.org/ns/docbook"
+    xmlns:db="http://docbook.org/ns/docbook" xmlns:xi="http://www.w3.org/2001/XInclude"
+    xmlns:xlink="http://www.w3.org/1999/xlink" xml:id="datagrid">
+    <info>
+        <title>Таблица данных</title>
+        <revhistory>
+            <revision>
+                <date>27.05.2014</date>
+                <revdescription>
+                    <para>Написан <xref linkend="editdlg"/></para>
+                    <para>Написан <xref linkend="grid_tuning"/></para>
+                </revdescription>
+            </revision>
+        </revhistory>
+    </info>
+
+
+    <para>Для просмотра и изменения данных используется табличный элемент управления (в дальнейшем -
+        "таблица").</para>
+    <para>Внешний вид таблицы приведён на <xref linkend="grid_browse"/>. </para>
+    <note>
+        <para>Элементы таблицы отмечены на рисунке.</para>
+    </note>
+    <figure xml:id="grid_browse">
+        <title>Внешний вид таблицы данных</title>
+        <mediaobject>
+            <imageobject>
+                <imagedata fileref="&путь;img/dbgrideh.png"/>
+            </imageobject>
+        </mediaobject>
+    </figure>
+    <para>Заголовок таблицы содержит названия колонок (полей). Заголовки обязательных для заполнения
+        полей выделены жирным шрифтом. </para>
+    <para>Изменение порядка следования и ширины заголовков колонок производится "буксировкой" мышью.
+        Настройки колонок сохраняются автоматически и восстанавливаются при следующем открытии окна
+        и запуске программы.</para>
+
+    <para>Таблица может находится в различных режимах, определить который можно по виду индикатора
+        текущей строки:</para>
+
+    <table xml:id="modes">
+
+        <caption>Режимы таблицы</caption>
+
+        <thead>
+            <tr>
+                <th colspan="1" rowspan="1">Режим</th>
+                <th colspan="1" rowspan="1">Вид индикатора</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td colspan="1" rowspan="1">просмотра</td>
+                <td colspan="1" rowspan="1">
+                    <mediaobject>
+                        <imageobject>
+                            <imagedata fileref="&путь;img/indicator_browse.png"/>
+                        </imageobject>
+                    </mediaobject>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="1" rowspan="1">редактирования (правки)</td>
+                <td colspan="1" rowspan="1">
+                    <mediaobject>
+                        <imageobject>
+                            <imagedata fileref="&путь;img/indicator_edit.png"/>
+                        </imageobject>
+                    </mediaobject>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="1" rowspan="1">вставки (добавления новой записи)</td>
+                <td colspan="1" rowspan="1">
+                    <mediaobject>
+                        <imageobject>
+                            <imagedata fileref="&путь;img/indicator_insert.png"/>
+                        </imageobject>
+                    </mediaobject>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="1" rowspan="1">поиска</td>
+                <td colspan="1" rowspan="1">
+                    <mediaobject>
+                        <imageobject>
+                            <imagedata fileref="&путь;img/indicator_find.png"/>
+                        </imageobject>
+                    </mediaobject>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table xml:id="gridcaps">
+        <caption>Горячие клавиши таблицы</caption>
+        <thead>
+            <tr>
+                <th colspan="1" rowspan="1">Необходимое действие</th>
+                <th colspan="1" rowspan="1">Сочетание клавиш</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td colspan="1" rowspan="1">Перейти к первой строке</td>
+                <td colspan="1" rowspan="1">
+                    <keycap>Ctrl</keycap>+<keycap>Home</keycap>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="1" rowspan="1">Перейти к предыдущей строке</td>
+                <td colspan="1" rowspan="1"><keycap>↑</keycap> (стрелка вверх)</td>
+            </tr>
+            <tr>
+                <td colspan="1" rowspan="1">Перейти с следующей строки</td>
+                <td colspan="1" rowspan="1"><keycap>↓</keycap> (стрелка вниз)</td>
+            </tr>
+            <tr>
+                <td colspan="1" rowspan="1">Перейти к последней строке</td>
+                <td colspan="1" rowspan="1">
+                    <keycap>Ctrl</keycap>+<keycap>End</keycap>
+                </td>
+            </tr>
+            <tr>
+                <td>Вставить новую запись</td>
+                <td><keycap>Insert</keycap></td>
+            </tr>
+            <tr>
+                <td>Удалить текущую запись</td>
+                <td><keycap>Ctrl</keycap>+<keycap>Delete</keycap></td>
+            </tr>
+            <tr>
+                <td colspan="1" rowspan="1">Перейти в режим редактирования</td>
+                <td colspan="1" rowspan="1">
+                    <keycap>F2</keycap> или просто изменить содержимой любой ячейки</td>
+            </tr>
+            <tr>
+                <td colspan="1" rowspan="1">Сохранить изменения</td>
+                <td colspan="1" rowspan="1">
+                    <keycap>Ctrl</keycap>+<keycap>S</keycap> или просто перейти на другую
+                    строку</td>
+            </tr>
+            <tr>
+                <td colspan="1" rowspan="1">Отмена внесенных изменений</td>
+                <td colspan="1" rowspan="1">
+                    <keycap>Esc</keycap>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="1" rowspan="1">Быстрый поиск</td>
+                <td colspan="1" rowspan="1">
+                    <keycap>Ctrl</keycap>+<keycap>F</keycap>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="1" rowspan="1">Поиск с <link linkend="find_dialog">диалогом</link>
+                </td>
+                <td colspan="1" rowspan="1">
+                    <keycap>Ctrl</keycap>+<keycap>F</keycap> дважды</td>
+            </tr>
+        </tbody>
+    </table>
+    <note>
+        <para>Как правило таблицы находятся в режиме предпочтения поиска перед правкой. Это
+            означает, что набор на клавиатуре символов приводит к контекстному поиску по текущему
+            полю. Если же таблица находится в режиме предпочтения правки перед поиском, то при
+            нажатии клавиш будет изменяться значение текущей ячейки. В этом случае для включения
+            режима контекстного поиска можно включить нажатием сочетания клавиш
+                <keycap>Ctrl</keycap>+<keycap>F</keycap>.</para>
+    </note>
+    <section xml:id="detail_panel">
+        <title>Панель детализации</title>
+        <para>В ряде случаев таблица по логике предметной области может иметь панель детализации, на
+            которой размещаются сведения, относящиеся к текущей строке. </para>
+        <para>О том, что такая панель детализации есть говорит наличие кнопки детализации <inlinemediaobject>
+                <imageobject>
+                    <imagedata fileref="&путь;img/detail_plus.png"/>
+                </imageobject>
+            </inlinemediaobject> в начале каждой строки. Открыть (показать) панель можно нажатием
+            кнопки детализации <inlinemediaobject>
+                <imageobject>
+                    <imagedata fileref="&путь;img/detail_plus.png"/>
+                </imageobject>
+            </inlinemediaobject> мышью или сочетанием клавиш <keycap>Ctrl</keycap>
+                +<keycap>↓</keycap>. Закрыть (спрятать) панель детализации можно повторным нажатием
+            кнопки детализации (которая для открытой панели будет иметь вид <inlinemediaobject>
+                <imageobject>
+                    <imagedata fileref="&путь;img/detail_minus.png"/>
+                </imageobject>
+            </inlinemediaobject>) или сочетанием клавиш <keycap>Ctrl</keycap>
+            +<keycap>↑</keycap>.</para>
+    </section>
+    <section xml:id="confirmdelete_dialog">
+        <title>Диалог удаления</title>
+        <para>Этот диалог появляется при попытке удалить запись из таблицы.</para>
+        <figure>
+            <title>Диалог подтверждения удаления записи</title>
+            <mediaobject>
+                <imageobject>
+                    <imagedata fileref="&путь;img/deleteconfirm.png"/>
+                </imageobject>
+            </mediaobject>
+        </figure>
+        <para>Удаление записи происходит только после утвердительного ответа на этот вопрос.</para>
+        <warning>
+            <para>Будьте внимательны при ответе на этот вопрос. Восстановить удалённую запись
+                невозможно.</para>
+        </warning>
+    </section>
+    <section xml:id="find_dialog">
+        <title>Диалог поиска</title>
+        <para>Этот диалог появляется при двойном нажатии сочетания клавиш
+                <keycap>Ctrl</keycap>+<keycap>F</keycap>
+        </para>
+        <figure>
+            <title>Подтверждение удаления записи</title>
+            <mediaobject>
+                <imageobject>
+                    <imagedata fileref="&путь;img/find_dialog.png"/>
+                </imageobject>
+            </mediaobject>
+        </figure>
+    </section>
+    <section xml:id="navigator">
+        <title>Навигатор</title>
+        <para>В левой нижней части таблицы размещается навигатор <inlinemediaobject>
+                <imageobject>
+                    <imagedata fileref="&путь;img/navigator.png"/>
+                </imageobject>
+            </inlinemediaobject>- специальный элемент для перемещения текущей записи по <link
+                linkend="datagrid">таблице</link> и изменения данных:</para>
+
+
+        <para>Первые четыре кнопки <inlinemediaobject>
+                <imageobject>
+                    <imagedata fileref="&путь;img/goto.png"/>
+                </imageobject>
+            </inlinemediaobject> предназначены для перемещения по таблице к первой, предыдущей,
+            следующей и последней записям соответственно.</para>
+        <para>Кнопка <inlinemediaobject>
+                <imageobject>
+                    <imagedata fileref="&путь;img/insert.png"/>
+                </imageobject>
+            </inlinemediaobject> предназначена для добавления (вставки) новой записи в таблицу
+            данных.</para>
+        <para>Кнопка <inlinemediaobject>
+                <imageobject>
+                    <imagedata fileref="&путь;img/delete.png"/>
+                </imageobject>
+            </inlinemediaobject> предназначена для удаления записи из таблицы данных.</para>
+
+        <note>
+            <para>Нажатие кнопки <inlinemediaobject>
+                    <imageobject>
+                        <imagedata fileref="&путь;img/delete.png"/>
+                    </imageobject>
+                </inlinemediaobject> не сразу удаляет запись, а приводит к появлению <link
+                    linkend="confirmdelete_dialog">диалога подтверждения</link>.</para>
+            <para>Действительное удаление записи происходит только после утвердительного ответа на
+                этот вопрос.</para>
+        </note>
+
+        <para>Кнопка <inlinemediaobject>
+                <imageobject>
+                    <imagedata fileref="&путь;img/edit.png"/>
+                </imageobject>
+            </inlinemediaobject> переводит <link linkend="datagrid">таблицу</link> в режим
+            редактирования данных.</para>
+        <para>Для подтверждения внесённых изменений предназначена кнопка <inlinemediaobject>
+                <imageobject>
+                    <imagedata fileref="&путь;img/post.png"/>
+                </imageobject>
+            </inlinemediaobject>.</para>
+        <note>
+
+            <para>Внесённые изменения будут также внесены в таблицу при переходе на другую строку
+                (запись).</para>
+        </note>
+        <para>Для отмены внесённых изменений можно воспользоваться кнопкой <inlinemediaobject>
+                <imageobject>
+                    <imagedata fileref="&путь;img/cancel.png"/>
+                </imageobject>
+            </inlinemediaobject></para>
+
+        <tip>
+
+            <para>Также можно нажать клавишу <keycap>Esc</keycap></para>
+        </tip>
+        <para>Для того, чтобы освежить (перечитать заново) данные текущей записи можно
+            воспользоваться кнопкой <inlinemediaobject>
+                <imageobject>
+                    <imagedata fileref="&путь;img/refresh.png"/>
+                </imageobject>
+            </inlinemediaobject>
+        </para>
+        <note>
+
+            <para>Как правило, программа устроена так, что показывает всегда свежие данные.
+                Необходимость в принудительном "освежении" данных с помощью кнопки <inlinemediaobject>
+                    <imageobject>
+                        <imagedata fileref="&путь;img/refresh.png"/>
+                    </imageobject>
+                </inlinemediaobject> может возникнуть только при совместной работе с базой данных в
+                том случае, если другой пользователь отредактировал именно ту же самую
+                запись.</para>
+        </note>
+    </section>
+    <section>
+        <title>Сортировка</title>
+        <para>Сортировка предназначена для изменения порядка отображения данных в таблице. </para>
+        <para>Сортировка осуществляется щелчком мышью по заголовку колонки. При этом справа от
+            названия поля появляется индикатор порядка сортировки. </para>
+        <para>Символ <inlinemediaobject>
+                <imageobject>
+                    <imagedata fileref="&путь;img/asc.png"/>
+                </imageobject>
+            </inlinemediaobject> означает сортировку по возрастанию (от меньшего к большему), а
+            символ <inlinemediaobject>
+                <imageobject>
+                    <imagedata fileref="&путь;img/desc.png"/>
+                </imageobject>
+            </inlinemediaobject>- обратную (от большего к меньшему).</para>
+        <para>Смена направления осуществляется повторным щелчком.</para>
+        <para>Если необходимо отсортировать данные по значениям нескольких колонок, то тогда
+            необходимо при щелчке по заголовку удерживать клавишу <keycap>Ctrl</keycap>. При этом
+            справа от индикатора сортировки появится целое число, показывающая в каком порядке
+            значения колонок участвуют в сортировке. </para>
+        <figure>
+            <title>Пример сортировки по нескольким колонкам</title>
+            <mediaobject>
+                <imageobject>
+                    <imagedata fileref="&путь;img/multisort.png"/>
+                </imageobject>
+            </mediaobject>
+        </figure>
+    </section>
+    <section>
+        <title>Меню таблицы</title>
+        <para>Для управления таблицей предназначено меню, вызов которого осуществляется щелчком мыши
+            в левом верхнем углу по кнопке <inlinemediaobject>
+                <imageobject>
+                    <imagedata fileref="&путь;img/menubutton.png"/>
+                </imageobject>
+            </inlinemediaobject>.</para>
+        <figure>
+            <title>Меню таблицы</title>
+            <mediaobject>
+                <imageobject>
+                    <imagedata fileref="&путь;img/gridmenu.png"/>
+                </imageobject>
+            </mediaobject>
+        </figure>
+
+        <section>
+            <title>Фильтр</title>
+            <para>При включении пункта меню <guimenuitem>Фильтр</guimenuitem> в таблице сверху
+                появляется дополнительная строка, которую можно использовать для фильтрации
+                (дополнительного отбора) данных. </para>
+            <para role="note">Внешне режим включенного фильтра проявляется в смене светло-желтой
+                раскраски таблицы на сине-голубую.</para>
+            <para>В каждой ячейке фильтрации имеется кнопка вызова редактора фильтра <inlinemediaobject>
+                    <imageobject>
+                        <imagedata fileref="&путь;img/filterbutton.jpg"/>
+                    </imageobject>
+                </inlinemediaobject>, при нажатии которой появляется следующее меню </para>
+            <mediaobject>
+                <imageobject>
+                    <imagedata fileref="&путь;img/filter_list.png"/>
+                </imageobject>
+            </mediaobject>
+
+            <para>Первые два пункта предназначены для сортировки данных и, строго говоря, к
+                фильтрации не имеют отношения, а дублируют возможность сортировки нажатием на
+                заголовок поля. </para>
+            <para>Пункт <guilabel>Очистить фильтр</guilabel> предназначен для сброса фильтрующего
+                выражения, после этого будут показаны абсолютно все данные без какой-либо
+                фильтрации. </para>
+            <para>Пункт <guilabel>Условие</guilabel> приводит к появлению редактора фильтрующего
+                выражения, внешний вид которого приведен на <xref linkend="userfilter"/>.</para>
+            <figure xml:id="userfilter">
+                <title>Редактор пользовательского фильтра</title>
+                <mediaobject>
+                    <imageobject>
+                        <imagedata fileref="&путь;userfilter.jpg"/>
+                    </imageobject>
+                </mediaobject>
+            </figure>
+            <para>Пункт <guilabel>Все</guilabel> предназначен для очистки фильтра по <emphasis
+                    role="bold">текущей колонки</emphasis>. </para>
+            <para role="note">В отличии от <guilabel>Очистить фильтр</guilabel> условия по всем
+                остальным колонкам останутся в силе.</para>
+            <para>С помощью пункта <guilabel>Не пустые</guilabel> можно оставить в таблице лишь те
+                строки, в которых текущая колонка имеет определенное (заданное) значение. </para>
+            <note>
+                <para>Следует пояснить, что "определенным" является в том числе и пустая строка, не
+                    смотря на то, что внешне в колонке данных нет. В контексте баз данных слово
+                    "Пустые" следует понимать как "Неизвестные" значения.</para>
+            </note>
+            <para>Пункт <guilabel>Пустые</guilabel> имеет обратное действие - остаются строки с
+                неопределенными ("Неизвестными") значениями.</para>
+            <para>Ниже следует список пунктов с заголовками, равными значениями колонки. Выделив
+                один или несколько пунктов можно оставить строки с определенными (выбранными)
+                значениями.</para>
+            <note>
+                <para>Следует понимать, что значения пунктов с конкретными значениями формируются
+                    программно на основании данных в таблице. На это нужно некоторое время, поэтом
+                    при нажатии кнопки фильтра курсор приобретает вид ожидания результатов запроса.
+                    Чем больше записей в таблице, тем дольше ожидание.</para>
+            </note>
+
+        </section>
+
+        <section>
+            <title>Условие</title>
+            <para>Для некоторых таблиц могут быть заданы дополнительные условия, которые перечислены
+                в меню <inlinemediaobject>
+                    <imageobject>
+                        <imagedata fileref="img/miconditions.png"/>
+                    </imageobject>
+                </inlinemediaobject>. </para>
+            <figure xml:id="conditions">
+                <title>Пример условий</title>
+                <mediaobject>
+                    <imageobject>
+                        <imagedata fileref="&путь;img/conditions.png"/>
+                    </imageobject>
+                </mediaobject>
+            </figure>
+            <para>В отличии от фильтров условия работают на стороне сервера. Это означает, что
+                включение/выключение условия приводит к повторному получению данных.</para>
+            <para>Включение условия отображается флажком, например <guimenuitem>Действующий
+                    контракт</guimenuitem> - на <xref linkend="conditions"/>. </para>
+            <para>Некоторые условия по логике могут быть взаимоисключающими, например
+                    <guimenuitem>Преподаватели</guimenuitem>, <guimenuitem>Служащие</guimenuitem>,
+                на <xref linkend="conditions"/>. В этом случае включение одного из условий в группе
+                приводит к автоматическому отключению других условий из группы, то есть происходит
+                переключение условия. </para>
+            <tip>
+                <para>Отключение всех условий группы осуществляется повторным выбором уже
+                    включенного.</para>
+            </tip>
+        </section>
+        <section>
+            <title>Просмотр</title>
+            <para>Для просмотра и печати содержащихся данных служит пункт меню
+                    <guimenuitem>Просмотр</guimenuitem>. Вариант окна просмотра приведен на <xref
+                    linkend="preview_window"/>
+            </para>
+            <figure xml:id="preview_window">
+                <title>Окно просмотра</title>
+                <mediaobject>
+                    <imageobject>
+                        <imagedata fileref="&путь;img/preview.png"/>
+                    </imageobject>
+                </mediaobject>
+            </figure>
+            <para>Печать таблицы осуществляется нажатием на одноименную кнопку</para>
+            <para>Нажатием кнопки <guibutton>Настройка принтера</guibutton> можно получить доступ к
+                некоторым опциям печати (<xref linkend="print_options"/>), названия которых говорят
+                сами за себя.</para>
+            <figure xml:id="print_options">
+                <title>Настройка принтера</title>
+                <mediaobject>
+                    <imageobject>
+                        <imagedata fileref="&путь;img/printoptions.png"/>
+                    </imageobject>
+                </mediaobject>
+            </figure>
+
+
+        </section>
+        <section>
+            <title>Экспорт</title>
+            <para>С помощью пункта меню <guimenuitem>Экспорт</guimenuitem> можно выгрузить имеющиеся
+                табличные данные в один из форматов (rtf, txt, csv, html, xls) для последующей
+                обработки в других программах. </para>
+        </section>
+        <section>
+            <title>Перечитать данные</title>
+            <para>При много пользовательской работе может возникнуть ситуация, когда данные
+                исправлены одним оператором, а другой видит старую версию данных. С помощью пункта
+                меню <guimenuitem>Перечитать данные</guimenuitem> можно заново прочитать свежие
+                данные из базы.</para>
+            <tip>
+                <para>Как правило для перечитывания данных в программе предусмотрен пункт меню с
+                    горячей клавишей <keycap>F5</keycap>
+                </para>
+            </tip>
+        </section>
+        <section xml:id="editdlg">
+            <title>Редактировать в диалоге</title>
+            <para>С помощью пункта меню <inlinemediaobject>
+                    <imageobject>
+                        <imagedata fileref="&путь;img/midlgedit.png"/>
+                    </imageobject>
+                </inlinemediaobject> возможно редактирование данных в отдельном окне (диалоге). Этот
+                же диалог вызывается двойным щелчком по таблице.</para>
+            <figure>
+                <title>Диалог редактирования данных</title>
+                <mediaobject>
+                    <imageobject>
+                        <imagedata fileref="&путь;img/editdlg.png"/>
+                    </imageobject>
+                </mediaobject>
+            </figure>
+            <para>При этом для просмотра и редактирования предлагаются только видимые поля (колонки
+                таблицы). </para>
+            <para>Для каждого типа данных используется наиболее подходящий редактор: для логических
+                значений - флажок, для вещественных - с калькулятором, для дат - с календарем и т.д. </para>
+            <para>Редакторы полей, доступные только для чтения, помечаются серым цветом, простые
+                строковые поля только для чтения показываются в метке. </para>
+            <para>Метки полей, обязательных для заполнения выделяются жирным шрифтом.</para>
+            <para>Для группы полей, объединенных одним заголовком, создается отдельная
+                закладка.</para>
+            <para>При вызове диалога активным становится редактор того, поля на котором находился
+                фокус в таблице.</para>
+            <para>С помощью навигатора можно перемещаться по данным, создавать и удалять
+                записи.</para>
+            <para>Для сохранения и закрытия диалога используется кнопка <guibutton>Ok</guibutton> ,
+                которая становится доступной только в случае наличия изменений (правки) данных. Для
+                сохранения без закрытия диалога используется кнопка
+                <guibutton>Применить</guibutton>, имеющая сочетание клавиш <keycap>Ctrl</keycap> +
+                    <keycap>S</keycap>. Для закрытия диалога без подтверждения изменений
+                используется кнопка <guibutton>Отмена</guibutton>. </para>
+        </section>
+        <section>
+            <title>Автоширина колонок</title>
+            <para>В некоторых случаях может оказаться удобным, чтобы суммарная ширина колонок не
+                превышала ширину таблицы и не появлялась горизонтальная полоса прокрутки. В этом
+                случае следует включить автоматически ширину колонок.</para>
+            <note>
+                <para>Для некоторых таблиц режим автоширины включен по умолчанию.</para>
+            </note>
+        </section>
+        <section>
+            <title>Итоги</title>
+            <para>Если в таблице предусмотрено вычисление суммарных (средних, минимальных,
+                максимальных) значений определенной колонки, то включение режима
+                    <guimenuitem>Итоги</guimenuitem> приводит к показу "подвала" таблицы (<xref
+                    linkend="sumactive"/>).</para>
+            <figure xml:id="sumactive">
+                <title>Таблица с включенными итогами</title>
+                <mediaobject>
+                    <imageobject>
+                        <imagedata fileref="&путь;img/sumactive.png"/>
+                    </imageobject>
+                </mediaobject>
+            </figure>
+            <note>
+                <para>Для некоторых таблиц режим итогов включен по умолчанию.</para>
+            </note>
+
+        </section>
+        <section>
+            <title>Локальная сортировка</title>
+            <para>Сортировка данных при щелчке по заголовку колонки (или с помощью пунктов фильтра)
+                может производится как клиентским приложением (локальная сортировка), так и сервером
+                (серверная сортировка).</para>
+            <para>Если компьютер пользователя достаточно мощный, а строк не очень много, то
+                сортировка происходит практически мгновенно. Однако при больших объемах данных в
+                таблице и/или слабом компьютере может оказаться рациональным отключить локальную
+                сортировку, переложив вычислительную нагрузку на сервер.</para>
+        </section>
+        <section>
+            <title>Навигатор</title>
+            <para>Несмотря на то, что каждая таблица имеет внизу ряд кнопок для управления данными -
+                "навигатор", может оказаться удобным схожий навигатор наверху таблицы. В этом случае
+                можно воспользоваться пунктом меню <guimenuitem>Навигатор</guimenuitem> , который
+                при включении создаст выше таблицы инструментальную панель и разместит на ней
+                навигатор. Если инструментальная панель уже есть, то навигатор будет размещен на
+                ней.</para>
+            <para>При отключении пункта меню <guimenuitem>Навигатор</guimenuitem> панель будет
+                удалена.</para>
+
+        </section>
+        <section>
+            <title>Панель поиска</title>
+            <para>В случае необходимости поиска данных по всей таблице с подсветкой найденных
+                данных, можно вызвать панель поиска, которая представляет собой комбинацию
+                однострочного редактора и инструментальных кнопок (<xref linkend="searchpanel"
+                />).</para>
+            <figure xml:id="searchpanel">
+                <title>Панель поиска</title>
+                <mediaobject>
+                    <imageobject>
+                        <imagedata fileref="&путь;img/searchpanel.png" width="95%"/>
+                    </imageobject>
+                </mediaobject>
+            </figure>
+
+
+        </section>
+        <section xml:id="grid_tuning">
+            <title>Настройка</title>
+            <para>Данный пункт меню используется для вызова диалога настройки внешнего вида таблицы:
+                видимости полей.</para>
+            <figure>
+                <title>Настройка таблицы</title>
+                <mediaobject>
+                    <imageobject>
+                        <imagedata fileref="&путь;img/gridtuning.png"/>
+                    </imageobject>
+                </mediaobject>
+            </figure>
+        </section>
+        <section>
+            <title>Видимые колонки</title>
+            <para>При большом количестве колонок в таблице возникает горизонтальная прокрутка и
+                работать становится не совсем удобно, так как не все колонки нужны в одинаковой
+                степени. В этом случае можно воспользоваться пунктом меню "Видимые колонки" и
+                выключить видимость лишних колонок. </para>
+            <tip>
+                <para>Для многоэтажных заголовков доступен пункт меню "Все поля", с помощью которого
+                    можно включить все группу полей, объединенных одним заголовком.</para>
+                <figure xml:id="allfields">
+                    <title>Пункт меню "Все поля"</title>
+                    <mediaobject>
+                        <imageobject>
+                            <imagedata fileref="&путь;img/allfields.png"/>
+                        </imageobject>
+                    </mediaobject>
+                </figure>
+            </tip>
+            <note>
+                <para>Как и в случае изменения размеров и перемещения заголовков видимость колонок
+                    будет автоматически сохранена и восстановлена при следующем открытии окна и/или
+                    запуске программы.</para>
+            </note>
+        </section>
+    </section>
+</section>

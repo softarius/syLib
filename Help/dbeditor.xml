@@ -1,0 +1,274 @@
+<?xml version="1.0" encoding="windows-1251"?>
+<section version="5.0" xml:lang="ru" xmlns="http://docbook.org/ns/docbook"
+    xmlns:db="http://docbook.org/ns/docbook" xmlns:xi="http://www.w3.org/2001/XInclude"
+    xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>
+        <anchor xml:id="dbeditor"/>Редактор данных</title>
+
+    <para>Рабочие окна, предназначенные для редактирования данных, содержат редактор данных,
+        представляющий собой подписанную рамку, внутри которой размещены <link linkend="navigator"
+            >навигатор</link> и <link linkend="datagrid">таблица данных</link>.</para>
+
+    <figure>
+        <title>Внешний вид редактора данных</title>
+        <mediaobject>
+            <imageobject>
+                <imagedata fileref="./img/editor.png"/>
+            </imageobject>
+        </mediaobject>
+    </figure>
+    <section xml:id="navigator">
+        <title>Навигатор</title>
+        <para>Навигатор предназначен для перемещения текущей записи по <link linkend="datagrid"
+                >таблице</link> и изменения данных:</para>
+        <figure>
+            <title>Навигатор</title>
+            <mediaobject>
+                <imageobject>
+                    <imagedata fileref="./img/navigator.png"/>
+                </imageobject>
+            </mediaobject>
+        </figure>
+
+
+        <para>Первые четыре кнопки <inlinemediaobject>
+                <imageobject>
+                    <imagedata fileref="img/goto.png"/>
+                </imageobject>
+            </inlinemediaobject> предназначены для перемещения по таблице к первой, предыдущей,
+            следующей и последней записям соответственно.</para>
+        <para>Кнопка <inlinemediaobject>
+                <imageobject>
+                    <imagedata fileref="img/insert.png"/>
+                </imageobject>
+            </inlinemediaobject> предназначена для добавления (вставки) новой записи в таблицу
+            данных.</para>
+        <para>Кнопка <inlinemediaobject>
+                <imageobject>
+                    <imagedata fileref="img/delete.png"/>
+                </imageobject>
+            </inlinemediaobject> предназначена для удаления записи из таблицы данных.</para>
+
+        <note>
+            <para>Нажатие кнопки <inlinemediaobject>
+                    <imageobject>
+                        <imagedata fileref="img/delete.png"/>
+                    </imageobject>
+                </inlinemediaobject> не сразу удаляет запись, а приводит к появлению <link
+                    linkend="confirmdelete_dialog">диалога подтверждения</link>.</para>
+            <para>Действительное удаление записи происходит только после утвердительного ответа на
+                этот вопрос.</para>
+        </note>
+
+        <para>Кнопка <inlinemediaobject>
+                <imageobject>
+                    <imagedata fileref="img/edit.png"/>
+                </imageobject>
+            </inlinemediaobject> переводит <link linkend="datagrid">таблицу</link> в режим
+            редактирования данных.</para>
+        <para>Для подтверждения внесённых изменений предназначена кнопка <inlinemediaobject>
+                <imageobject>
+                    <imagedata fileref="img/post.png"/>
+                </imageobject>
+            </inlinemediaobject>.</para>
+        <note>
+
+            <para>Внесённые изменения будут также внесены в таблицу при переходе на другую строку
+                (запись).</para>
+        </note>
+        <para>Для отмены внесённых изменений можно воспользоваться кнопкой <inlinemediaobject>
+                <imageobject>
+                    <imagedata fileref="img/cancel.png"/>
+                </imageobject>
+            </inlinemediaobject></para>
+
+        <tip>
+
+            <para>Также можно нажать клавишу <keycap>Esc</keycap></para>
+        </tip>
+        <para>Для того, чтобы освежить (перечитать заново) данные текущей записи можно
+            воспользоваться кнопкой <inlinemediaobject>
+                <imageobject>
+                    <imagedata fileref="img/refresh.png"/>
+                </imageobject>
+            </inlinemediaobject>
+        </para>
+        <note>
+
+            <para>Как правило, программа устроена так, что показывает всегда свежие данные.
+                Необходимость в принудительном "освежении" данных с помощью кнопки <mediaobject>
+                    <imageobject>
+                        <imagedata fileref="img/refresh.png"/>
+                    </imageobject>
+                </mediaobject> может возникнуть только при совместной работе с базой данных в том
+                случае, если другой пользователь отредактировал именно ту же самую запись.</para>
+        </note>
+    </section>
+    <section xml:id="datagrid">
+        <title>Таблица данных</title>
+
+        <para>Для просмотра и изменения данных в программе используется мощный табличный элемент
+            управления (в дальнейшем - "таблица").</para>
+        <para>Внешний вид таблицы приведён на <xref linkend="grid_browse"/></para>
+        <figure xml:id="grid_browse">
+            <title>Таблица в режиме просмотра</title>
+            <mediaobject>
+                <imageobject>
+                    <imagedata fileref="img/dbgrid.jpg"/>
+                </imageobject>
+            </mediaobject>
+        </figure>
+
+        <para>
+            <emphasis role="bold">Внешний вид таблицы данных</emphasis>
+        </para>
+
+
+        <para>Таблица может находится в различных режимах, определить который можно по виду
+            индикатора текущей строки:</para>
+        <table xml:id="modes">
+            <caption>Режимы таблицы</caption>
+            <thead>
+                <tr>
+                    <th colspan="1" rowspan="1">Режим</th>
+                    <th colspan="1" rowspan="1">Вид индикатора</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td colspan="1" rowspan="1">просмотра</td>
+                    <td colspan="1" rowspan="1">
+                        <mediaobject>
+                            <imageobject>
+                                <imagedata fileref="img/indicator_browse.png"/>
+                            </imageobject>
+                        </mediaobject>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="1" rowspan="1">редактирования</td>
+                    <td colspan="1" rowspan="1">
+                        <mediaobject>
+                            <imageobject>
+                                <imagedata fileref="img/indicator_edit.png"/>
+                            </imageobject>
+                        </mediaobject>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="1" rowspan="1">вставки</td>
+                    <td colspan="1" rowspan="1">
+                        <mediaobject>
+                            <imageobject>
+                                <imagedata fileref="img/indicator_insert.png"/>
+                            </imageobject>
+                        </mediaobject>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="1" rowspan="1">поиска</td>
+                    <td colspan="1" rowspan="1">
+                        <mediaobject>
+                            <imageobject>
+                                <imagedata fileref="img/indicator_find.png"/>
+                            </imageobject>
+                        </mediaobject>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <table xml:id="gridcaps">
+            <caption>Горячие клавиши таблицы</caption>
+            <thead>
+                <tr>
+                    <th colspan="1" rowspan="1">Необходимое действие</th>
+                    <th colspan="1" rowspan="1">Сочетание клавиш</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td colspan="1" rowspan="1">Перейти к первой строке</td>
+                    <td colspan="1" rowspan="1">
+                        <keycap>Ctrl+Home</keycap>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="1" rowspan="1">Перейти к предыдущей строке</td>
+                    <td colspan="1" rowspan="1">стрелка вверх</td>
+                </tr>
+                <tr>
+                    <td colspan="1" rowspan="1">Перейти с следующей строки</td>
+                    <td colspan="1" rowspan="1">стрелка вниз</td>
+                </tr>
+                <tr>
+                    <td colspan="1" rowspan="1">Перейти к последней строке</td>
+                    <td colspan="1" rowspan="1">
+                        <keycap>Ctrl+End</keycap>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="1" rowspan="1">Перейти в режим редактирования</td>
+                    <td colspan="1" rowspan="1">
+                        <keycap>F2</keycap> или просто изменить содержимой любой ячейки</td>
+                </tr>
+                <tr>
+                    <td colspan="1" rowspan="1">Сохранить изменения</td>
+                    <td colspan="1" rowspan="1">
+                        <keycap>Ctrl+S</keycap> или просто перейти на другую строку</td>
+                </tr>
+                <tr>
+                    <td colspan="1" rowspan="1">Отмена внесенных изменений</td>
+                    <td colspan="1" rowspan="1">
+                        <keycap>Esc</keycap>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="1" rowspan="1">Быстрый поиск</td>
+                    <td colspan="1" rowspan="1">
+                        <keycap>Ctrl+F</keycap>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="1" rowspan="1"> Поиск с <link linkend="find_dialog">диалогом</link>
+                    </td>
+                    <td colspan="1" rowspan="1">
+                        <keycap>Ctrl+F</keycap> дважды</td>
+                </tr>
+            </tbody>
+        </table>
+        <section xml:id="confirmdelete_dialog">
+            <title>Диалог удаления</title>
+            <para>Этот диалог появляется при попытке удалить запись из таблицы.</para>
+            <figure>
+                <title>Диалог подтверждения удаления записи</title>
+                <mediaobject>
+                    <imageobject>
+                        <imagedata fileref="img/deleteconfirm.png"/>
+                    </imageobject>
+                </mediaobject>
+            </figure>
+            <para>Удаление записи происходит только после утвердительного ответа на этот
+                вопрос.</para>
+            <warning>
+                <para>Будьте внимательны при ответе на этот вопрос. Восстановить удалённую запись
+                    невозможно.</para>
+            </warning>
+        </section>
+        <section xml:id="find_dialog">
+            <title>Диалог поиска</title>
+            <para>Этот диалог появляется при двойном нажатии сочетания клавиш
+                    <keycap>Ctrl+F</keycap>
+            </para>
+            <figure>
+                <title>Подтверждение удаления записи</title>
+                <mediaobject>
+                    <imageobject>
+                        <imagedata fileref="img/find_dialog.png"/>
+                    </imageobject>
+                </mediaobject>
+            </figure>
+        </section>
+
+    </section>
+
+</section>

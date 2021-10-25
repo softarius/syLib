@@ -1,0 +1,456 @@
+body{
+    font-family:Verdana, Helvetica, Arial, sans-serif;
+    font-size:11pt;
+    color:#000000;
+    background-color:#FFFFFF;
+    text-align:justify;
+    padding:15px;
+}
+
+
+div.navheader table tr td,
+div.navfooter table tr td,
+div.navheader table tr th,
+div.navfooter table tr th{
+    background-color:transparent;
+}
+div.orderedlist{
+    margin-top:6pt;
+}
+.action,
+.guibutton,
+.guimenu,
+.guimenuitem{
+    font-weight:bold;
+}
+.guibutton,
+.guimenu,
+.guimenuitem{
+    padding:0px 0.5em 0px 0.5em;
+}
+.guimenu,
+.guimenuitem,
+.guilabel{
+	/* font-size: 10pt; */
+    background-color:#E4E4E4;
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 12px;
+	font-style: normal;
+	font-weight: normal;
+	line-height: normal;
+	
+	text-align: left;
+}
+.guibutton{
+    font-size:10pt;
+    font-weight:normal;
+    border-width:1px 2px 2px 1px;
+    border-style:solid;
+    background:#eee;
+    border-color:#ddd #bbb #bbb #ddd;
+}
+.guilabel{
+}
+.keycap{
+	font-family:"Courier New", Courier, monospace;
+	background-color:#EAEAEA;
+	border:thin outset #CCC;
+	padding-top:1px;
+	padding-right:3px;
+	padding-bottom:1px;
+	padding-left:3px;
+	height: 12px;
+	text-align: center;
+	white-space: pre;
+	min-width: 5px;
+	max-width:12px;
+}
+.guibutton{
+    padding:3px;
+}
+.copyright
+{
+    text-indent:0;
+    color:blue;
+}
+div.toc{
+    margin-top:15px;
+    border:1px solid black;
+    padding:0px 10px;
+    text-indent:0;
+    background-color:#fff9cd;
+    color:black;
+    margin-bottom:1cm;
+    width:80%;
+}
+.synopsis{
+    color:white;
+    background-color:black;
+    text-indent:0;
+}
+.author{
+    color:#0000ee;
+}
+.definition{
+    background-color:#FFFF99;
+    color:#000000;
+    margin:15px;
+    padding:25px;
+    padding-right:80px;
+    background-image:url(pix/definition.gif);
+    background-repeat:no-repeat;
+    background-position:right center;
+    font-size:11pt;
+    font-family:verdana, tahoma;
+    text-align:justify;
+    border-style:solid;
+    border-width:2px;
+    border-color:red
+}
+p.definition{
+    text-indent:0;
+}
+.hide{
+    display:none;
+}
+.test{
+    /* background-color:#F5F9FF; */
+    color:#506580;
+    padding:10px;
+    padding-left:50px;
+    background-image:url(pix/sqr.gif);
+    background-repeat:no-repeat;
+    background-position:2px center;
+    font-family:verdana, tahoma;
+    font-size:small;
+    text-align:justify;
+}
+td p{
+    text-indent:0pt;
+}
+.figure
+{
+    text-align:center;
+}
+.caution,
+.important,
+.note,
+.tip,
+.warning{
+    font-family:verdana, tahoma;
+    border-top:5px solid;
+    border-left:1px solid;
+    margin:1em 0 0 1em;
+    padding:5px 0 10px 0;
+    width:95%;
+    clear:both;
+    text-indent:0pt;
+    text-align:justify;
+    background-repeat:no-repeat;
+    background-position:15px center;
+    padding-top:0px;
+    padding-right:0.8em;
+    padding-bottom:0.8em;
+    padding-left:55px;
+}
+.note{
+    border-color:#069;
+    background-color:#F5F9FF;
+    background-image:
+    url(data:image/gif;base64,R0lGODlhLQArAMQfAGZhXrKrrNrW1vz8+8zGxp2VlaObmRgXE+ro58C6u9DKypSMiYmAeHlzcKmhoI2HhdTNz1BKRMW8xJiRkN7a2zgzLqaapebj4sfBwdbQ0ZqKko18g7q0sePf4PLw7////yH5BAEAAB8ALAAAAAAtACsAAAX/4CeOZDl8nneW4uCycCx7DJPIOPvmHwIsnISHx9vhfJuMJBBAEJ8f4wjB2EAkDofhBoVJV1NAg5AIWLSOS1cHZiEaDQk2azA4FGuopwGQZ7MFWgZqeTk0fQl0dIEGBU6FMTQREomAdg4FdRocQ5AmDxEJlXWNdHYFBW2eHwYRAQkWdZmNdqQOCxSqhR2uEnWYE6SZpoG6axcNFrDCE6gGzYJ2DLmeHBUWWJmoqM3cl4EPAcZEFBUT2Y0L290FzbVaCQICCAidRLwbiesT6tzrtQYCQMgAQR6FDhfouZAi4kIEIAH28es2gV0gLRIyCOjAkQIFAQcRXhgCxkMFVwG0/7SryK9fu22zAhDI4JHjhQsdO1BQkEEhyQAVGEjgoGUBy4mZKsJ0gEEBT4MhOXakgCADBw4jCPRSabTZggfOLHJwOlAj1IMHE3pQh7WFAwYczDwz2u6By2CBMBBQMFAeSI+ALwhIQAFAhjZvXMUqQJefXW2Zxu6FUPDsQQQE4ASIQI2EBwAALCR9wPIB6aQy+WZY7fevTgcRDjAAJUDXgAgANGRa0PVrvy0E9rK2nKBBhQMVFgB4oAKGhwgNdBewW9F0swAYJOhVDTVDgdgHXFkjgCMDdA0GHjCo+DUYhvfByWqkkADA8QoNOFAoUAFDDg7QoWLaShNwQIBee3GnwP8C4AHAlEYARCBADgNscMAGBczWDVPb8TQQBAEAgFwEcDUlAAYVGEDEAMZtAAddCcDHF2UJMHBfA0zFR4EB/T0xgH1w2IWddgkSYICIJz3AQYc02UfeE59FsAFYMcJHAAfGIdfAFh0WREAFAFDQRTkABBRjcAmAgtwP2AXnZkEBHBBAHnFOoAAGrzhgX3gMOHBmkXwJYNyTa4AWowENRHASAAUEsGR8TpEFAZjj5JDASQ1MwAAcfooSRAIJRppBnA54UtgB4bGZAE8ZKHAggk4JekBbkAygwJ5rLiCTRgRBmsFJEKwyAgUPNIDqmuEQ4NdqcT4gLAsKFGDssSQaYCAisRUU8KwXeE6L6kmbAvDItl4IMMGx3wJALoVqiIicPSWEAAA7);
+}
+.tip
+{
+    border-color:#090;
+    background-color:#F5FFF5;
+    background-image:
+    url(data:image/gif;base64,R0lGODlhGQAeAMQfAIiJisrLy/j4vejr8Nzh6vP190M9KuTl6dna3fn6+b6/mMDL46uYJHl2c8zT2/Dw9JJ2BfH8/eT288PJ0be8wubmrmNjX87X6brD2vTLLpuenvvbLP38/P//////zP///yH/C05FVFNDQVBFMi4wAwEAAAAh+QQFZAAfACwAAAAAGQAeAAAF/+AnjmJHjuapisXqvjCZxiOFqcPsXoDV/A0Agia6UCwax6MwmPQol1FrdXRwrtdOZ2Kh0CwTTkKMjUSqI44KoOlwtJzAm1OIsElqkuWQDQQ6fh11Dg0wDQ9XbXAcGhESBIUjCSRHBYlacI0SAxYkUyIUh5eLGhKbnSh5IhYDiYoJGqWPDVEiCTpsmIodshEaAHgnXAhau6URDhY3MBp7vBqwjQRIKzoHFAAFsLCmSARpOicaBLy8ETxEI80NGuw9wCKqLxYM9fYMqDAzBhv9/hkGBqT7YCFDvwwIM1gYko7fBoMJFw608DAhQgMMiTj091BiOgsQ6kEYCQFAuBccDhlYMMCSpYUFJ1FOaGlAlDwaHRA08DEk5ocQACH5BAVkAB8ALAAAAAAYABsAAAX54CeOY8FxRJIUZOsm3TQ82EM4X8G6YvfdA8xi6MDUHAfep3MYDCiYy4UikhqdSoJw8dEoKuCK5rMwEnwlJ+YTUAg8cHhFEfhgDsnRYILBKeKAcA0fFxgTD0srhRd/gYEKdgQRHxwDZRcVb46AcxdDSQlajJuOGoUIKwOeGBWkgRUTCwgPNkIfja5wChRlCEtBH625urEDPgdGDri5FXYYAx8PqpiargKmFwM7CUW3w5BRCXoIUgrLjwpSF4giJ8AewuieEhwtHQQXBAPVnDMEZy8S4DEXJpMCDRKMKeGwgoCSDw52PPyQZ6JFXxYvZtS48SHGjjyggQwBADs=);
+}
+.warning
+{
+    border-color:#900;
+    background-image:
+    url(data:image/gif;base64,R0lGODlhHgAeALMPAOro4PjQARsWRNSuA/3gAv7xAVxdnJ6PMf/8E/DjZf//JPrtFurXIl9POv//AP///yH5BAEAAA8ALAAAAAAeAB4AAAT/8MlJJVAq1c07Qg6SAF25AYujOI5BmiZaiCDjwiXAFJhSOIIXbrMozFS/wW1I0RE+KhAiyKQsCKHCAOlQCodOx0FAZiBm1OoVTRY0zuIlznluuz+/NI5BeALbDTxGB3I5DAF4DW0HUWhfHXxPP2NkATMKBAWEMDoBCwhYAwIGgQUECqAEhRuHiKZGow2ZT6CaqxOdRX1Giox9p30LehWtun1iAgOmfR+WmyeHBFe/mgKWv8B9twkBnti/1t8ICgEEz7jR098D3+WY5YXFfeXlRq8E5fgL5OYGuAPdFtDLJ6rSPHzAui3hlq9bPgJ2Ag2UJrDfAx0ABQ4sF7GAw27SPrp5AQDQIT56BRQFOVBxIsgGBhIMKPnxY4MGB2rWBEiI5MyfQGc6DBq0m6IHMokqXfpTkb+LpCICmkpVpYsIADs=);
+
+    background-color:#F5F9FF;
+}
+.caution{
+    border-color:#c60;
+}
+.important{
+    border-color:#069;
+}
+.danger{
+    background-color:white;
+    color:black;
+    padding:10px;
+    padding-left:60px;
+    background-image:url(pix/danger.gif);
+    background-repeat:no-repeat;
+    background-position:4px center;
+    font-family:verdana, tahoma;
+
+    text-align:justify;
+    border-width:3px;
+    border-style:solid;
+}
+.example{
+    font-family:verdana, tahoma;
+    font-size:11pt;
+    margin-top:15px;
+    background-color:blue;
+    background-image:url("pix/header.png");
+    background-repeat:repeat-x;
+    background-position:0px top;
+}
+.example p.title{
+    color:white;
+}
+.warning h3{
+    color:red;
+}
+.trouble{
+    background-color:#F5F9FF;
+    color:#FF6580;
+    padding:0.8em;
+    padding-left:60px;
+    background-image:url(warning.gif);
+    background-repeat:no-repeat;
+    background-position:5px 5px;
+    font-family:verdana, tahoma;
+    font-size:x-small;
+    text-align:justify;
+}
+.console{
+    background-color:black;
+    color:white;
+    padding:5px;
+    margin:0;
+    font-family:"Courier New", Courier, monospace;
+    font-size:medium;
+    white-space:pre;
+}
+code{
+    font-size:12pt;
+}
+.modifier{
+    font-family:"Courier New", Courier, monospace;
+    font-size:12pt;
+}
+.code{
+    background-color:white;
+    color:black;
+    padding:5px;
+    margin:0;
+    font-family:"Courier New", Courier, monospace;
+    white-space:pre;
+}
+.keyword,
+.KEYWORD{
+    font-family:"Courier New", Courier, monospace;
+    color:blue;
+    font-weight:bold;
+}
+.comment,
+.COMMENT{
+    color:#008800;
+}
+.string,
+.STRING{
+    color:#007777;
+}
+.character,
+.CHARACTER{
+    color:black;
+}
+.number,
+.NUMBER{
+    color:red;
+}
+img{
+    border:none;
+}
+P{
+    text-indent:3em;
+    margin:0;
+}
+.section,
+.glossary,
+.bibliography{
+    font-weight:normal;
+}
+LI P{
+    text-indent:0;
+}
+dd p{
+    text-indent:0;
+}
+dt{
+    font-weight:bolder;
+}
+UL{
+    text-indent:0;
+}
+H1,
+H2,
+h3,
+h4,
+h5{
+    color:#4580A0;
+    font-weight:bold;
+    margin-top:3ex;
+    margin-bottom:1ex;
+}
+H1{
+    font-family:arial;
+    font-size:14pt;
+    text-align:center;
+}
+H2{
+    font-size:12pt;
+}
+H1 SPAN.subtitle{
+    font-family:verdana, tahoma;
+    font-size:14pt;
+    font-weight:lighter;
+}
+H3{
+    font-family:tahoma, verdana;
+    font-size:12pt;
+    text-align:left;
+}
+H4{
+    font-family:tahoma, verdana;
+    font-size:11pt;
+    margin-left:0.1em;
+    padding-left:30px;
+    text-align:left;
+}
+H5{
+    font-family:tahoma, verdana;
+    font-size:11pt;
+    text-align:left;
+}
+H5 .title{
+    color:#3570A0;
+}
+H5 .value{
+    font-family:verdana, tahoma;
+    font-style:italic;
+    color:#0;
+}
+H6{
+    font-family:tahoma, verdana;
+    font-size:9pt;
+    text-align:right;
+    font-weight:lighter;
+}
+H6 .title{
+    color:#3570A0;
+}
+H6 .value{
+    font-family:arial;
+    font-style:italic;
+    color:#0;
+}
+.contents{
+    background-color:#FFFFDD;
+    padding:0.8em;
+    font-size:medium;
+}
+A{
+    text-decoration:none;
+    font-family:tahoma;
+    color:#6677AA;
+}
+.codetitle{
+    padding-top:12pt;
+    color:#4580A0;
+}
+A:hover{
+    text-decoration:underline;
+    color:#8899CC;
+}
+a.link
+{
+    color:#8899CC;
+}
+TH{
+    font-family:verdana, tahoma;
+    font-size:10pt;
+    /*    background-color:#DFF;*/
+}
+TD{
+    font-family:verdana, tahoma;
+    /* background-color:#EFF;*/
+    font-size:9pt;
+}
+caption{
+    font-size:10pt;
+    font-weight:bolder;
+    text-align:right;
+}
+ol{
+    margin-top:0pt;
+}
+.orderedlist p.title{
+    text-indent:3em;
+    text-align:left;
+}
+P.TITLE{
+    text-indent:0;
+    font-size:9pt;
+    font-weight:bolder;
+    padding-bottom:-6pt;
+    text-align:CENTER;
+}
+.note P,
+.tip P,
+.warning P,
+.definition P{
+    text-indent:0;
+}
+div.example{
+    font-family:verdana, tahoma;
+    background-repeat:repeat-x;
+    background-position:0px top;
+}
+.example p.title{
+    color:yellow;
+    padding:5px;
+}
+.programlisting{
+    padding-top:5px;
+    background-image:url("pix/code.png");
+    background-repeat:repeat-y;
+    color:black;
+    background-color:white;
+    padding-left:63px;
+    margin:0;
+    font-family:"Courier New", Courier, monospace;
+    font-size:11pt;
+}
+.keyword,
+.KEYWORD{
+    font-family:"Courier New", Courier, monospace;
+    color:blue;
+    font-weight:bold;
+    white-space:pre;
+}
+.comment,
+.COMMENT{
+    color:#008800;
+    white-space:pre;
+}
+.string,
+.STRING{
+    color:#007777;
+}
+.character,
+.CHARACTER{
+    color:black;
+}
+.number,
+.NUMBER{
+    color:red;
+}

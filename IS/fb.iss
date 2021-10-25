@@ -1,10 +1,10 @@
-#define MyFirebirdDir 'C:\Program Files\Firebird\Firebird_2_5'
+#define MyFirebirdDir 'C:\Program Files (x86)\Firebird\Firebird_3_0\'
 #define FireBirdDir "{GetFirebirdDir}"
 
-#define FBEmbeded='"D:\Дистрибутивы\Разработка\Базы данных\FireBird\Firebird 2.1.3\Firebird-2.1.3.18185-0_Win32_embed\"'
+#define FBEmbeded='"C:\Program Files (x86)\Firebird\Firebird_3_0\"'
 
 [Code]
-#include <xml.iss>
+
 
 var
  
@@ -442,10 +442,10 @@ end;
 [Files]
 ; Клиент Firebird
  #if Privileges == "user"
-Source: {#MyFirebirdDir}\bin\fbclient.dll; DestDir: {app}; Components: client\fbclient;  Flags: onlyifdoesntexist; 
+Source: {#MyFirebirdDir}\fbclient.dll; DestDir: {app}; Components: client\fbclient;  Flags: onlyifdoesntexist; 
 Source: {#MyFirebirdDir}\firebird.msg; DestDir: {app}; Components: client\fbclient;  Flags: onlyifdoesntexist; 
    #else  
-Source: {#MyFirebirdDir}\bin\fbclient.dll; DestDir: {sys}; Components: client\fbclient; Flags: sharedfile uninsneveruninstall onlyifdoesntexist 
+Source: {#MyFirebirdDir}\fbclient.dll; DestDir: {sys}; Components: client\fbclient; Flags: sharedfile uninsneveruninstall onlyifdoesntexist 
 Source: {#MyFirebirdDir}\firebird.msg; DestDir: {code:GetFirebirdDir}; Components: client\fbclient; Flags: sharedfile uninsneveruninstall onlyifdoesntexist 
    #endif
 [Registry]
