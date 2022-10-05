@@ -1,5 +1,5 @@
 unit syPluginManager;
-
+
 interface
 
 uses
@@ -37,7 +37,7 @@ type
     procedure SetReport(const Value: TfrxReport);
     procedure SetDone(const Value: TNotifyEvent);
     procedure SetAutoloadPlugins(const Value: boolean);
-    procedure SetToolbar(const Value: TToolbar);
+    procedure SetToolbar(const Value: TToolBar);
     { Private declarations }
   protected
     { Protected declarations }
@@ -66,7 +66,7 @@ type
     property OnDone: TNotifyEvent read FDone write SetDone;
     property FibDatabase: TfibdataBase read FFibdatabase write SetFibdatabase;
     property Report: TfrxReport read FReport write SetReport;
-    property Toolbar: TToolbar read FToolbar write SetToolbar;
+    property Toolbar: TToolBar read fToolBar write SetToolbar;
   end;
 
 procedure register;
@@ -87,8 +87,17 @@ var
   aSetReport: TSetReport;
   i: integer;
 begin
+   for i := 0 to Application.MainForm.MDIChildCount - 1 do
+    begin
+       if Application.MainForm.MDIChildren[i].Caption = (Sender as TAction).Caption
+      then
+        begin
+        Application.MainForm.MDIChildren[i].BringToFront;
+        Exit;
+        end;
+    end;
 
-  if True { not(Sender as TAction).Checked} then
+  if true {not(Sender as TAction).Checked} then // FIXME исправить реакцию на повторный вызов модуля
   begin
     //(Sender as TAction).Checked := true;
 
@@ -96,7 +105,6 @@ begin
 
     handle := LoadLibrary(PChar(DirName + (Sender as TAction).Name));
 
-    // (Sender as TAction).Tag := handle;
     @fFibPluginExec := GetProcAddress(handle, 'FibPluginExec');
 
     { @aSetReport := GetProcAddress(handle, 'SetReport');
@@ -106,7 +114,6 @@ begin
     if Assigned(FFibdatabase) and (Assigned(fFibPluginExec)) then
     begin
       fFibPluginExec(Sender as TAction, FFibdatabase.handle);
-      // (Sender as TAction).Hint := Application.MainForm.ActiveMDIChild.ClassName;
     end
     else
     begin
@@ -118,14 +125,11 @@ begin
   else
   begin
 
-    for i := 0 to Application.MainForm.MDIChildCount - 1 do
 
-      if Application.MainForm.MDIChildren[i].ClassName = (Sender as TAction).Hint
-      then
-        Application.MainForm.MDIChildren[i].BringToFront;
+
     { @fUpload := GetProcAddress(handle, 'Upload');
       fUpload;
-      FreeLibrary((Sender as TAction).Tag); }
+      FreeLibrary((Sender as TAction).Tag);  }
   end;
 end;
 
@@ -241,10 +245,10 @@ begin
 
           if Assigned(Toolbar) then
           begin
-          tb:=TToolButton.Create(Toolbar);
-          tb.Parent:=Toolbar;
-          tb.Left:=Toolbar.Width;
-          tb.Action:=Action;
+            tb := TToolButton.Create(Toolbar);
+            tb.Parent := Toolbar;
+            tb.Left := Toolbar.Width;
+            tb.Action := Action;
           end;
 
           if Assigned(ActionBars) and (ActionBars.Count > 0) then
@@ -252,7 +256,11 @@ begin
 
             ac := ActionBars[0].Items.Add;
             ac.Action := Action;
-            TButtonProperties(ac.CommandProperties).ButtonSize := bsLarge;
+            if Action.Hint = '' then
+              Action.Hint := Action.Caption;
+
+            ac.ShowCaption := false;
+            // TButtonProperties(ac.CommandProperties).ButtonSize := bsLarge;
             // bp := TButtonProperties(ac.CommandProperties);
             inc(Result);
           end;
@@ -334,9 +342,10 @@ begin
   FReport := Value;
 end;
 
-procedure TsyPluginManager.SetToolbar(const Value: TToolbar);
+procedure TsyPluginManager.SetToolbar(const Value: TToolBar);
 begin
-  FToolbar := Value;
+  fToolBar := Value;
 end;
 
 end.
+

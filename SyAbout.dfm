@@ -12,7 +12,7 @@ object AboutBox: TAboutBox
   Font.Name = 'MS Sans Serif'
   Font.Style = []
   OldCreateOrder = True
-  Position = poMainFormCenter
+  Position = poScreenCenter
   ShowHint = True
   OnClose = FormClose
   OnCloseQuery = FormCloseQuery
@@ -28,7 +28,6 @@ object AboutBox: TAboutBox
     Top = 8
     Width = 433
     Height = 376
-    Anchors = [akLeft, akTop, akBottom]
     BevelInner = bvRaised
     BevelOuter = bvLowered
     ParentColor = True

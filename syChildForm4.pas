@@ -48,11 +48,11 @@ type
     procedure DoClose(var Action: TCloseAction); override;
     procedure Loaded; override;
 
+    procedure Activate; override;
   public
 
     { Public declarations }
     constructor Create(AOwner: TComponent); override;
-    procedure OpenAll; virtual;
   end;
 
 var
@@ -100,6 +100,12 @@ begin
             (ukInsert in TpFIBDataSet(DataSource.DataSet).AllowedUpdateKinds);
 end;
 
+procedure TsyChildForm.Activate;
+begin
+  inherited;
+
+end;
+
 constructor TsyChildForm.Create(AOwner: TComponent);
 var
   i, m, ic, c: Integer;
@@ -131,7 +137,7 @@ begin
     TAction(Action).Checked := True;
   end;
 
-  // Открытие всех наборов данных
+  // Открытие всех наборов данных   OpenAll;
   for i := 0 to ComponentCount - 1 do
   begin
     if Components[i] is TFIBDataSet then
@@ -144,6 +150,7 @@ begin
           fbDataset.Open;
         except
           // ShowMessage('Не удалось открыть '+fbdataset.name);
+
         end;
 
         if Assigned(fbDataset.Database) and (fbDataset.Database.Connected) and
@@ -356,53 +363,9 @@ begin
   inherited;
   // WindowState := wsMaximized;
 
-  // OpenAll;
 
 end;
 
-procedure TsyChildForm.OpenAll;
-var
-  i: Integer;
-  fbDataset: TFIBDataSet;
-begin
-
-  // Открытие всех наборов данных
-  for i := 0 to ComponentCount - 1 do
-  begin
-    if Components[i] is TFIBDataSet then
-    begin
-
-      fbDataset := (Components[i] as TFIBDataSet);
-      if not fbDataset.Database.Connected then
-        fbDataset.Database.Open;
-      fbDataset.AutoCommit := True;
-      if fbDataset.Tag = 0 then
-      begin
-        try
-          fbDataset.Open;
-        except
-          // ShowMessage('Не удалось открыть '+fbdataset.name);
-        end;
-
-        if Assigned(fbDataset.Database) and (fbDataset.Database.Connected) and
-          Assigned(fbDataset.Conditions.FindCondition
-          (Uppercase(fbDataset.Database.ConnectParams.RoleName) + '$')) and
-          (Uppercase(fbDataset.Database.ConnectParams.UserName) <> 'SYSDBA')
-        then
-        begin
-          // ShowMessage(fbDataset.Database.ConnectParams.RoleName);
-          fbDataset.Conditions.FindCondition
-            (fbDataset.Database.ConnectParams.RoleName + '$').Enabled := True;
-        end;
-        if (fbDataset.Conditions.Count > 0) and fbDataset.Database.Connected
-        then
-          fbDataset.ApplyConditions(True);
-      end;
-
-    end;
-  end;
-
-end;
 
 procedure TsyChildForm.ДокументироватьExecute(Sender: TObject);
 var

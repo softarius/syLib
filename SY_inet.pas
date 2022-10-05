@@ -163,7 +163,6 @@ begin
     MessageDlg(Format(SServerDisabled, [HostName]), mtWarning, [mbOk], 0);
     Exit;
   end;
-
   XMLDocument1 := TXMLDocument.Create(Self);
   try
     // InputQuery('','',UrlContent);
@@ -195,8 +194,8 @@ begin
       Result := true;
     end;
 
-    if (iSiteVersionNum.MS = FileLongVersion.MS) and
-      (iSiteVersionNum.LS = FileLongVersion.LS) and
+    if (iSiteVersionNum.MS <= FileLongVersion.MS) and
+      (iSiteVersionNum.LS <= FileLongVersion.LS) and
       (uoShowEqualMessage in Options) and (not SupressEqualMessage) then
       MessageDlg(SVersionOk, mtInformation, [mbOk], 0);
 

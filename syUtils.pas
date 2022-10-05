@@ -1,5 +1,5 @@
 unit syUtils;
-
+
 interface
 
 {$DEFINE FIBPLUS}
@@ -12,7 +12,7 @@ uses Windows, Vcl.Graphics, Vcl.ActnList, Classes, Vcl.Forms, Registry,
   FIBQuery, pFIBQuery,
   frxClass, {$ENDIF} Vcl.ActnMan, db, shellApi,
   IdHashMessageDigest, idHash, symd5, strUtils, nb30, variants, activex, comobj,
-  inifiles, dateUtils,
+  inifiles, dateUtils, syLog,
   math;
 
 type
@@ -66,8 +66,47 @@ function BitmapToRegion(Bitmap: TBitmap): HRGN;
 function SilentLogin(FIBDatabase: TpFIBDatabase): boolean;
 procedure ReportsFromBase(ParentMenuItem: TMenuItem; Handler: TNotifyEvent;
   aDatabase: TpFIBDatabase);
+
+/// <summary> Заполнение списка из базы данных
+/// </summary>
+/// <param name="fibDB">База данных
+/// </param>
+/// <param name="aFieldName">Имя поля
+/// </param>
+/// <param name="Table1">Таблица
+/// </param>
+/// <param name="PickList">Список для заполнения. Если передан экземпляр, то он заполняется
+/// В противном случае - возвращается текст, пригодный для присвоения свойству TStrings.Text
+/// </param>
+/// <param name="Where">Условие, по умолчанию - все
+/// </param>
+/// <param name="OrderDir">Направление сортировки, по умолчанию - по возрастанию
+/// </param>
+/// <returns> Строка для заполнения TStringlist.Text
+/// </returns>
 function GetPicklistFromTable(fibDB: TFIBDataBase; aFieldName: string;
-  Table1: string; Where: string = '1=1'): string;
+  Table1: string; PickList: TStrings; Where: string = '1=1';
+  OrderDir: string = 'ASC'): string; overload;
+
+/// <summary> Заполнение списка из базы данных
+/// </summary>
+/// <param name="Column">Колонка
+/// </param>
+/// <param name="aFieldName">Имя поля. Если пустое, то используем имя поля колонки
+/// </param>
+/// <param name="Table1">Таблица
+/// </param>
+
+/// <param name="Where">Условие, по умолчанию - все
+/// </param>
+/// <param name="OrderDir">Направление сортировки, по умолчанию - по возрастанию
+/// </param>
+/// <param name="KeyListToo">Заполнять ли так же список ключевых значений
+/// </param>
+procedure FillAutolist(Column: TColumnEh; aFieldName: string;
+  Table1: string; Where: string = '1=1'; OrderDir: string = 'ASC';
+  KeyListToo: boolean = false);
+
 procedure ApplyHiddenConditions(aFibDataset: TFibDataset);
 procedure LoadReport(MenuItem: TComponent; pFIBDatabase1: TpFIBDatabase;
   aReport: TfrxReport; Showing: boolean = false);
@@ -81,9 +120,6 @@ function GetRegistryIconHandle(FileName: string): HICON;
 function MD5OfFile(const FileName: string): string;
 function FormatFIO(F, I, O: string; Form: integer = -1): string;
 
-procedure FillAutolist(Button: TObject; aFieldName: string = '';
-  aTable: string = ''; Where: string = ' 1=1 '; KeyListAlso: boolean = false);
-// автословарь
 
 function GetVal(s: string; Separator: Char = '='): string;
 function IntegerInWords(N: integer; Female: boolean = false): string;
@@ -498,58 +534,82 @@ begin
 end;
 
 function GetPicklistFromTable(fibDB: TFIBDataBase; aFieldName: string;
-  Table1: string; Where: string = '1=1'): string;
+  Table1: string; PickList: TStrings; Where: string = '1=1';
+  OrderDir: string = 'ASC'): string;
 var
   q: TFIBQuery;
+  v: string;
 begin
   q := TFIBQuery.Create(Application);
+
   with q do
   begin
     Database := fibDB;
-    SQL.Text :=
-      Format('select distinct cast(%s as varchar(1000)) from %s where %0:s is not null and %2:s',
-      [aFieldName, Table1, Where]);
+    SQL.Text := Format('select distinct cast(%s as varchar(1000)) ' +
+      'from %s where %0:s is not null and %2:s order by 1 %3:s',
+      [aFieldName, Table1, Where, OrderDir]);
 
     ExecQuery;
-    Result := '';
+
+    if Assigned(PickList) then
+      PickList.Clear
+    else
+      Result := '';
+
     while not EOF do
     begin
-      if trim(Fields[0].AsString) <> '' then
+      v := trim(Fields[0].AsString);
 
-        Result := Result + trim(Fields[0].AsString) + #13#10;
+      if v = '' then
+        continue;
+
+      if Assigned(PickList) then
+        PickList.Add(v)
+      else
+        Result := Result + v + #13#10;
       Next;
     end;
+
     free;
   end;
 end;
 
-procedure FillAutolist(Button: TObject; aFieldName: string = '';
-  aTable: string = ''; Where: string = ' 1=1 '; KeyListAlso: boolean = false);
-// автословарь
+procedure FillAutolist(Column: TColumnEh; aFieldName: string;
+  Table1: string; Where: string = '1=1'; OrderDir: string = 'ASC';
+  KeyListToo: boolean = false);
 var
-  grid: TDBGridEh;
-  dataset: TFibDataset;
+  v: string;
 begin
+  if aFieldName='' then aFieldName:=Column.FieldName;
 
-  grid := (Button as TEditButtonControlEh).Owner.Owner as TDBGridEh;
-  with grid, Columns[SelectedIndex] do
+  with TFIBQuery.Create(Application) do
   begin
-    dataset := DataSource.dataset as TFibDataset;
-    if aFieldName = '' then
-      aFieldName := Columns[SelectedIndex].fieldName;
-    if aTable = '' then
-      aTable := dataset.AutoUpdateOptions.UpdateTableName;
+    Database := (Column.grid.DataSource.DataSet as TpFIBDataSet).Database;
+    SQL.Text := Format('select distinct cast(%s as varchar(1000)) ' +
+      'from %s where %0:s is not null and %2:s order by 1 %3:s',
+      [aFieldName, Table1, Where, OrderDir]);
 
-    PickList.Text := GetPicklistFromTable(dataset.Database, aFieldName,
-      aTable, Where);
+    ExecQuery;
 
-    if trim(PickList.Text) = '' then
-      PickList.Text := '_';
+    Column.PickList.Clear;
 
-    if KeyListAlso then
-      KeyList.Text := PickList.Text;
+    while not EOF do
+    begin
+      v := trim(Fields[0].AsString);
+      if v <> '' then
+        Column.PickList.Add(v);
+      Next;
+    end;
+    if Column.PickList.Count = 0 then
+      Column.PickList.Add(' ');
+
+    free;
   end;
+
+  if KeyListToo then Column.Keylist.Assign(Column.PickList);
 end;
+
+
 
 function FormatFIO(F, I, O: string; Form: integer): string;
 begin
@@ -835,7 +895,7 @@ end;
 
 function SilentLogin(FIBDatabase: TpFIBDatabase): boolean;
 var
- // l: hkl;
+  // l: hkl;
   ErrCode: Cardinal;
 begin
   // Пробуем подключиться тихо. Вдруг получиться ;-)
@@ -1134,7 +1194,7 @@ begin
   try
     with (Sender as TDBGridEh) do
     begin
-      if DataSource.dataset.RecNo mod 2 = 0 then
+      if DataSource.DataSet.RecNo mod 2 = 0 then
       begin
         if (Column.ReadOnly or (Column.Field.FieldKind = fkCalculated)) then
           Background := clOddReadOnly
@@ -1325,7 +1385,7 @@ begin
       aChildForm := TWorkForm(FormClass).Create(Application);
       aChildForm.Action := TAction(Sender);
 
-      (aChildForm as TsyChildForm).OpenAll;
+      // (aChildForm as TsyChildForm).OpenAll;
       IniFile.WriteBool(Category, Caption, Checked);
 
       // except
@@ -1462,3 +1522,4 @@ finalization
 IniFile.free;
 
 end.
+
