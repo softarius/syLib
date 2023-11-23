@@ -64,7 +64,7 @@
         <SanitizedProjectName>SYLib27</SanitizedProjectName>
     </PropertyGroup>
     <PropertyGroup Condition="'$(Base_Win32)'!=''">
-        <DCC_UsePackage>vcl;rtl;vclimg;xmlrtl;vclactnband;vclx;dsnap;dbrtl;VclSmp;vcldb;IndySystem;IndyProtocols;IndyCore;frx18;EhLib180;fs18;FIBPlus_XE4;Jcl;JvCore;JvSystem;JvStdCtrls;JvControls;vclribbon;FIBPlus_D26;fs26;frx26;EhLib260;FIBPlus_D27;frx27;fs27;$(DCC_UsePackage)</DCC_UsePackage>
+        <DCC_UsePackage>vcl;rtl;vclimg;xmlrtl;vclactnband;vclx;dsnap;dbrtl;VclSmp;vcldb;IndySystem;IndyProtocols;IndyCore;frx18;EhLib180;fs18;FIBPlus_XE4;Jcl;JvCore;JvSystem;JvStdCtrls;JvControls;vclribbon;FIBPlus_D26;fs26;frx26;EhLib260;FIBPlus_D27;frx27;fs27;EhLib270;RaizeComponentsVcl;$(DCC_UsePackage)</DCC_UsePackage>
         <VerInfo_Locale>1033</VerInfo_Locale>
         <Manifest_File>$(BDS)\bin\default_app.manifest</Manifest_File>
         <VerInfo_IncludeVerInfo>true</VerInfo_IncludeVerInfo>
@@ -74,7 +74,7 @@
         <AppEnableRuntimeThemes>true</AppEnableRuntimeThemes>
     </PropertyGroup>
     <PropertyGroup Condition="'$(Base_Win64)'!=''">
-        <DCC_UsePackage>vcl;rtl;vclimg;xmlrtl;vclactnband;vclx;dsnap;dbrtl;VclSmp;vcldb;IndySystem;IndyProtocols;IndyCore;EhLib180;FIBPlus_XE4;vclribbon;FIBPlus_D26;EhLib260;FIBPlus_D27;$(DCC_UsePackage)</DCC_UsePackage>
+        <DCC_UsePackage>vcl;rtl;vclimg;xmlrtl;vclactnband;vclx;dsnap;dbrtl;VclSmp;vcldb;IndySystem;IndyProtocols;IndyCore;EhLib180;FIBPlus_XE4;vclribbon;FIBPlus_D26;EhLib260;FIBPlus_D27;EhLib270;$(DCC_UsePackage)</DCC_UsePackage>
         <Manifest_File>$(BDS)\bin\default_app.manifest</Manifest_File>
         <Icon_MainIcon>SYLib15_Icon1.ico</Icon_MainIcon>
         <AppEnableRuntimeThemes>true</AppEnableRuntimeThemes>
@@ -922,6 +922,8 @@
         <DCCReference Include="Office_TLB.dcr"/>
         <DCCReference Include="SpeechLib_TLB.dcr"/>
         <DCCReference Include="Word_TLB.dcr"/>
+        <DCCReference Include="RaizeComponentsVcl.dcp"/>
+        <DCCReference Include="frx27.dcp"/>
         <DCCReference Include="rtl.dcp"/>
         <DCCReference Include="vclx.dcp"/>
         <DCCReference Include="vcl.dcp"/>
@@ -936,12 +938,10 @@
         <DCCReference Include="IndyProtocols.dcp"/>
         <DCCReference Include="DesignIde.dcp"/>
         <DCCReference Include="FIBPlus_D27.dcp"/>
-        <DCCReference Include="EhLib260.dcp"/>
-        <DCCReference Include="frx27.dcp"/>
+        <DCCReference Include="EhLib270.dcp"/>
         <DCCReference Include="fs27.dcp"/>
         <DCCReference Include="SY_IBDialogs.pas"/>
         <DCCReference Include="syPluginManager.pas"/>
-        <DCCReference Include="SY_inet.pas"/>
         <DCCReference Include="syBlobEditor.pas"/>
         <DCCReference Include="syUtils.pas"/>
         <DCCReference Include="syBank.pas"/>
@@ -951,66 +951,6 @@
         <DCCReference Include="syLib.PackageSplash.pas"/>
         <DCCReference Include="syLib.Buh1C.pas"/>
         <DCCReference Include="V82_TLB.pas"/>
-        <DCCReference Include="..\ehlib\DataDrivers\FIBDataDriver\pFIBDataDriverEh.pas"/>
-        <None Include="ModelSupport_SYLib26\default.txvpck"/>
-        <None Include="ModelSupport_SYLib26\syUtils\default.txvpck"/>
-        <None Include="ModelSupport_SYLib26\syFIBChat\default.txvpck"/>
-        <None Include="ModelSupport_SYLib26\SY_IBDialogs\default.txvpck"/>
-        <None Include="ModelSupport_SYLib26\SY_inet\default.txvpck"/>
-        <None Include="ModelSupport_SYLib26\mdiMain\default.txvpck"/>
-        <None Include="ModelSupport_SYLib26\V82_TLB\default.txvpck"/>
-        <None Include="ModelSupport_SYLib26\syBank\default.txvpck"/>
-        <None Include="ModelSupport_SYLib26\syStdAction\default.txvpck"/>
-        <None Include="ModelSupport_SYLib26\syBlobEditor\default.txvpck"/>
-        <None Include="ModelSupport_SYLib26\syPluginManager\default.txvpck"/>
-        <None Include="ModelSupport_SYLib26\syUtilsEh\default.txvpck"/>
-        <None Include="ModelSupport_SYLib26\syLib\default.txvpck"/>
-        <None Include="ModelSupport_SYLib26\syLib\Buh1C\default.txvpck"/>
-        <None Include="ModelSupport_SYLib26\syLib\PackageSplash\default.txvpck"/>
-        <None Include="ModelSupport_SYLib26\syBank\default.txaPackage"/>
-        <None Include="ModelSupport_SYLib26\syUtilsEh\default.txaPackage"/>
-        <None Include="ModelSupport_SYLib26\syUtils\default.txaPackage"/>
-        <None Include="ModelSupport_SYLib26\SY_inet\default.txaPackage"/>
-        <None Include="ModelSupport_SYLib26\syBlobEditor\default.txaPackage"/>
-        <None Include="ModelSupport_SYLib26\syLib\Buh1C\default.txaPackage"/>
-        <None Include="ModelSupport_SYLib26\syFIBChat\default.txaPackage"/>
-        <None Include="ModelSupport_SYLib26\syLib\default.txaPackage"/>
-        <None Include="ModelSupport_SYLib26\syLib\PackageSplash\default.txaPackage"/>
-        <None Include="ModelSupport_SYLib26\V82_TLB\default.txaPackage"/>
-        <None Include="ModelSupport_SYLib26\syPluginManager\default.txaPackage"/>
-        <None Include="ModelSupport_SYLib26\mdiMain\default.txaPackage"/>
-        <None Include="ModelSupport_SYLib26\SY_IBDialogs\default.txaPackage"/>
-        <None Include="ModelSupport_SYLib26\syStdAction\default.txaPackage"/>
-        <None Include="ModelSupport_SYLib27\default.txaPackage"/>
-        <None Include="ModelSupport_SYLib27\default.txvpck"/>
-        <None Include="ModelSupport_SYLib27\V82_TLB\default.txvpck"/>
-        <None Include="ModelSupport_SYLib27\syBlobEditor\default.txvpck"/>
-        <None Include="ModelSupport_SYLib27\syLib\default.txvpck"/>
-        <None Include="ModelSupport_SYLib27\syLib\Buh1C\default.txvpck"/>
-        <None Include="ModelSupport_SYLib27\syLib\PackageSplash\default.txvpck"/>
-        <None Include="ModelSupport_SYLib27\SY_inet\default.txvpck"/>
-        <None Include="ModelSupport_SYLib27\syUtils\default.txvpck"/>
-        <None Include="ModelSupport_SYLib27\SY_IBDialogs\default.txvpck"/>
-        <None Include="ModelSupport_SYLib27\syUtilsEh\default.txvpck"/>
-        <None Include="ModelSupport_SYLib27\syFIBChat\default.txvpck"/>
-        <None Include="ModelSupport_SYLib27\syBank\default.txvpck"/>
-        <None Include="ModelSupport_SYLib27\syStdAction\default.txvpck"/>
-        <None Include="ModelSupport_SYLib27\syPluginManager\default.txvpck"/>
-        <None Include="ModelSupport_SYLib27\pFIBDataDriverEh\default.txvpck"/>
-        <None Include="ModelSupport_SYLib27\syLib\PackageSplash\default.txaPackage"/>
-        <None Include="ModelSupport_SYLib27\syLib\Buh1C\default.txaPackage"/>
-        <None Include="ModelSupport_SYLib27\SY_inet\default.txaPackage"/>
-        <None Include="ModelSupport_SYLib27\V82_TLB\default.txaPackage"/>
-        <None Include="ModelSupport_SYLib27\syUtils\default.txaPackage"/>
-        <None Include="ModelSupport_SYLib27\syPluginManager\default.txaPackage"/>
-        <None Include="ModelSupport_SYLib27\syStdAction\default.txaPackage"/>
-        <None Include="ModelSupport_SYLib27\SY_IBDialogs\default.txaPackage"/>
-        <None Include="ModelSupport_SYLib27\syUtilsEh\default.txaPackage"/>
-        <None Include="ModelSupport_SYLib27\pFIBDataDriverEh\default.txaPackage"/>
-        <None Include="ModelSupport_SYLib27\syBlobEditor\default.txaPackage"/>
-        <None Include="ModelSupport_SYLib27\syFIBChat\default.txaPackage"/>
-        <None Include="ModelSupport_SYLib27\syBank\default.txaPackage"/>
-        <None Include="ModelSupport_SYLib27\syLib\default.txaPackage"/>
         <BuildConfiguration Include="Debug">
             <Key>Cfg_2</Key>
             <CfgParent>Base</CfgParent>

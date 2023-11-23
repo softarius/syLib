@@ -64,7 +64,7 @@ object AboutBox: TAboutBox
       IsControl = True
       ExplicitTop = 0
     end
-    object Version: TLabel
+    object lblVersion: TLabel
       Left = 2
       Top = 35
       Width = 429
@@ -72,11 +72,11 @@ object AboutBox: TAboutBox
       Align = alTop
       Alignment = taCenter
       AutoSize = False
-      Caption = 'Version'
+      Caption = 'lblVersion'
       IsControl = True
       ExplicitTop = 25
     end
-    object Copyright: TLabel
+    object lblCopyright: TLabel
       Left = 2
       Top = 353
       Width = 429
@@ -85,14 +85,14 @@ object AboutBox: TAboutBox
       Align = alBottom
       Alignment = taCenter
       AutoSize = False
-      Caption = 'Copyright'
+      Caption = 'lblCopyright'
       Font.Charset = DEFAULT_CHARSET
       Font.Color = clBlue
       Font.Height = -11
       Font.Name = 'MS Sans Serif'
       Font.Style = [fsUnderline]
       ParentFont = False
-      OnClick = CopyrightClick
+      OnClick = lblCopyrightClick
       IsControl = True
       ExplicitLeft = 0
       ExplicitTop = 216
@@ -117,6 +117,7 @@ object AboutBox: TAboutBox
       Font.Name = 'MS Sans Serif'
       Font.Style = [fsUnderline]
       ParentFont = False
+      Visible = False
       OnClick = MD5LabelClick
       IsControl = True
       ExplicitTop = 49
@@ -154,6 +155,7 @@ object AboutBox: TAboutBox
       Font.Name = 'MS Sans Serif'
       Font.Style = [fsUnderline]
       ParentFont = False
+      Visible = False
       OnClick = lCompanyMailClick
       IsControl = True
     end
@@ -173,6 +175,7 @@ object AboutBox: TAboutBox
       Font.Name = 'MS Sans Serif'
       Font.Style = [fsUnderline]
       ParentFont = False
+      Visible = False
       OnClick = lCompanySiteClick
       IsControl = True
     end
