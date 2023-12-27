@@ -52,7 +52,8 @@ requires
   IndyProtocols,
   IndyCore,
   frxDB26,
-  fsDB26;
+  fsDB26,
+  RaizeComponentsVcl;
 
 contains
   SY_IBDialogs in 'SY_IBDialogs.pas',
@@ -66,7 +67,6 @@ contains
   syUtilsEh in 'syUtilsEh.pas',
   syLib.PackageSplash in 'syLib.PackageSplash.pas',
   syLib.Buh1C in 'syLib.Buh1C.pas',
-  V82_TLB in 'V82_TLB.pas',
-  pFIBDataDriverEh in '..\ehlib\DataDrivers\FIBDataDriver\pFIBDataDriverEh.pas';
+  V82_TLB in 'V82_TLB.pas';
 
 end.

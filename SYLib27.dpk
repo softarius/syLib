@@ -33,6 +33,9 @@ package SYLib27;
 {$DESCRIPTION 'Sergey Yushinin library'}
 {$IMPLICITBUILD OFF}
 
+contains
+  SY_inet in 'SY_inet.pas';
+
 requires
   RaizeComponentsVcl,
   frx27,

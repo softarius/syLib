@@ -922,35 +922,8 @@
         <DCCReference Include="Office_TLB.dcr"/>
         <DCCReference Include="SpeechLib_TLB.dcr"/>
         <DCCReference Include="Word_TLB.dcr"/>
-        <DCCReference Include="RaizeComponentsVcl.dcp"/>
-        <DCCReference Include="frx27.dcp"/>
-        <DCCReference Include="rtl.dcp"/>
-        <DCCReference Include="vclx.dcp"/>
-        <DCCReference Include="vcl.dcp"/>
-        <DCCReference Include="vclactnband.dcp"/>
-        <DCCReference Include="vcldb.dcp"/>
-        <DCCReference Include="xmlrtl.dcp"/>
-        <DCCReference Include="VclSmp.dcp"/>
-        <DCCReference Include="dsnap.dcp"/>
-        <DCCReference Include="vclimg.dcp"/>
-        <DCCReference Include="IndySystem.dcp"/>
-        <DCCReference Include="IndyCore.dcp"/>
-        <DCCReference Include="IndyProtocols.dcp"/>
-        <DCCReference Include="DesignIde.dcp"/>
-        <DCCReference Include="FIBPlus_D27.dcp"/>
-        <DCCReference Include="EhLib270.dcp"/>
-        <DCCReference Include="fs27.dcp"/>
-        <DCCReference Include="SY_IBDialogs.pas"/>
-        <DCCReference Include="syPluginManager.pas"/>
-        <DCCReference Include="syBlobEditor.pas"/>
-        <DCCReference Include="syUtils.pas"/>
-        <DCCReference Include="syBank.pas"/>
-        <DCCReference Include="syFIBChat.pas"/>
-        <DCCReference Include="syStdAction.pas"/>
-        <DCCReference Include="syUtilsEh.pas"/>
-        <DCCReference Include="syLib.PackageSplash.pas"/>
-        <DCCReference Include="syLib.Buh1C.pas"/>
-        <DCCReference Include="V82_TLB.pas"/>
+        <DCCReference Include="SY_inet.pas"/>
+        <None Include="ModelSupport_SYLib27\default.txaPackage"/>
         <BuildConfiguration Include="Debug">
             <Key>Cfg_2</Key>
             <CfgParent>Base</CfgParent>

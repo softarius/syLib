@@ -1,9 +1,9 @@
 unit SY_inet;
-
+
 interface
 
 uses SysUtils, Classes, Controls, Windows, WinInet, Forms, Dialogs,
-  Sy_const, UpdateDlg, XMLDoc, Registry, math, syUtils, JvVersionInfo;
+  Sy_const, UpdateDlg, XMLDoc, Registry, math, syUtils, rzStatus;
 
 function GetUrlContent(Server, Resource: string): widestring;
 
@@ -12,6 +12,14 @@ type
   TUpdateOption = (uoUpdateIfPresent, uoShowEqualMessage, uoUseUninsatllInfo,
     uoAutoLoadSettings, uoAutoSaveSettings, uoAutoUpdate, uoAntiCash);
   TUpdateOptions = set of TUpdateOption;
+
+  TLongVersion = record
+    case Integer of
+      0:
+        (All: array [1 .. 4] of Word);
+      1:
+        (MS, LS: Longint);
+  end;
 
   TUpdaterSY = class(TComponent)
   private
@@ -87,6 +95,38 @@ begin
   end;
 end;
 
+function StringToLongVersion(const Str: string): TLongVersion;
+var
+  Sep: Integer;
+  Tmp, Fragment: string;
+  I: Word;
+begin
+  Tmp := Str;
+  for I := 1 to 4 do
+  begin
+    Sep := Pos('.', Tmp);
+    if Sep = 0 then
+      Sep := Pos(',', Tmp);
+    if Sep = 0 then
+      Fragment := Tmp
+    else
+    begin
+      Fragment := copy(Tmp, 1, Sep - 1);
+      Tmp := copy(Tmp, Sep + 1, MaxInt);
+    end;
+    if Fragment = '' then
+      Result.All[I] := 0
+    else
+      Result.All[I] := StrToInt(Fragment);
+  end;
+  I := Result.All[1];
+  Result.All[1] := Result.All[2];
+  Result.All[2] := I;
+  I := Result.All[3];
+  Result.All[3] := Result.All[4];
+  Result.All[4] := I;
+end;
+
 procedure register;
 begin
   RegisterComponents('SYLib', [TUpdaterSY]);
@@ -100,7 +140,8 @@ end;
 function TUpdaterSY.CheckUpdate(SupressEqualMessage: boolean = false): boolean;
 var
   SiteVersion, HostName, UrlContent, cashid: string;
-  iSiteVersionNum: TLongVersion;
+  sVersion, fVersion: TLongVersion;
+
   XMLDocument1: TXMLDocument;
   aURLC: TURLComponents;
 begin
@@ -175,14 +216,16 @@ begin
     Exit;
   end;
 
-  with AppVerInfo do
+  with TRzVersionInfo.Create(Application.MainForm) do
   begin
     SiteVersion := XMLDocument1.DocumentElement.ChildNodes['version'].Text;
-    iSiteVersionNum := StringToLongVersion(SiteVersion);
+    // Версия на сайте
+    sVersion := StringToLongVersion(SiteVersion);
+    fVersion := StringToLongVersion(FileVersion);
 
-    Result := (iSiteVersionNum.MS > FileLongVersion.MS) or
-      ((iSiteVersionNum.MS = FileLongVersion.MS) and
-      (iSiteVersionNum.LS > FileLongVersion.LS));
+    // Версия приложения
+    Result := (sVersion.MS > fVersion.MS) or
+      ((sVersion.MS = fVersion.MS) and (sVersion.LS > fVersion.LS));
 
     if Result and (uoUpdateIfPresent in Options) and
       (MessageDlg(Format(SNewVersionPresent, [fURLUpdateInfo, SiteVersion]),
@@ -195,9 +238,8 @@ begin
       Result := true;
     end;
 
-    if (iSiteVersionNum.MS = FileLongVersion.MS) and
-      (iSiteVersionNum.LS = FileLongVersion.LS) and
-      (uoShowEqualMessage in Options) and (not SupressEqualMessage) then
+    if (SiteVersion = FileVersion) and (uoShowEqualMessage in Options) and
+      (not SupressEqualMessage) then
       MessageDlg(SVersionOk, mtInformation, [mbOk], 0);
 
   end;
@@ -284,3 +326,4 @@ begin
 end;
 
 end.
+

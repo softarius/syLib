@@ -64,7 +64,7 @@
         <SanitizedProjectName>SYLib26</SanitizedProjectName>
     </PropertyGroup>
     <PropertyGroup Condition="'$(Base_Win32)'!=''">
-        <DCC_UsePackage>vcl;rtl;vclimg;xmlrtl;vclactnband;vclx;dsnap;dbrtl;VclSmp;vcldb;IndySystem;IndyProtocols;IndyCore;frx18;EhLib180;fs18;FIBPlus_XE4;Jcl;JvCore;JvSystem;JvStdCtrls;JvControls;vclribbon;FIBPlus_D26;fs26;frx26;EhLib260;frxDB26;fsDB26;$(DCC_UsePackage)</DCC_UsePackage>
+        <DCC_UsePackage>vcl;rtl;vclimg;xmlrtl;vclactnband;vclx;dsnap;dbrtl;VclSmp;vcldb;IndySystem;IndyProtocols;IndyCore;frx18;EhLib180;fs18;FIBPlus_XE4;Jcl;JvCore;JvSystem;JvStdCtrls;JvControls;vclribbon;FIBPlus_D26;fs26;frx26;EhLib260;frxDB26;fsDB26;RaizeComponentsVcl;$(DCC_UsePackage)</DCC_UsePackage>
         <VerInfo_Locale>1033</VerInfo_Locale>
         <Manifest_File>$(BDS)\bin\default_app.manifest</Manifest_File>
         <VerInfo_IncludeVerInfo>true</VerInfo_IncludeVerInfo>
@@ -1172,6 +1172,7 @@
         <DCCReference Include="IndyCore.dcp"/>
         <DCCReference Include="frxDB26.dcp"/>
         <DCCReference Include="fsDB26.dcp"/>
+        <DCCReference Include="RaizeComponentsVcl.dcp"/>
         <DCCReference Include="SY_IBDialogs.pas"/>
         <DCCReference Include="syPluginManager.pas"/>
         <DCCReference Include="SY_inet.pas"/>
@@ -1184,7 +1185,6 @@
         <DCCReference Include="syLib.PackageSplash.pas"/>
         <DCCReference Include="syLib.Buh1C.pas"/>
         <DCCReference Include="V82_TLB.pas"/>
-        <DCCReference Include="..\ehlib\DataDrivers\FIBDataDriver\pFIBDataDriverEh.pas"/>
         <BuildConfiguration Include="Debug">
             <Key>Cfg_2</Key>
             <CfgParent>Base</CfgParent>
