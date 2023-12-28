@@ -204,7 +204,6 @@ begin
     MessageDlg(Format(SServerDisabled, [HostName]), mtWarning, [mbOk], 0);
     Exit;
   end;
-
   XMLDocument1 := TXMLDocument.Create(Self);
   try
     // InputQuery('','',UrlContent);

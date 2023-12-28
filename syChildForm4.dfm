@@ -30,6 +30,7 @@
     end
     object miTitlesCopy: TMenuItem
       Action = Документировать
+      Visible = False
     end
   end
   object CommonActionManager: TActionManager

@@ -64,8 +64,8 @@ procedure TAboutBox.FormCreate(Sender: TObject);
 var
   Resource: HGlobal;
 begin
-  Top := Screen.Height div 2 - Height div 2;
-  Left := Screen.Width div 2 - Width div 2;
+//  Top := Screen.Height div 2 - Height div 2;
+ // Left := Screen.Width div 2 - Width div 2;
   with TRzVersionInfo.Create(Application.MainForm) do
   begin
     imgLogo.Picture.Icon.Assign(Application.Icon);

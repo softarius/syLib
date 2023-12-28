@@ -41,6 +41,7 @@ procedure TfrmSplash.FormCreate(Sender: TObject);
 begin
    try
     Image1.Picture.Bitmap.LoadFromResourceName(HInstance, 'ABOUT');
+    Image1.Picture.Bitmap.SaveToFile('d:/tmp/splash.bmp');
   except
 
   end;

@@ -9,7 +9,7 @@ uses
   Vcl.Mask, DBCtrlsEh, UITypes, Vcl.DBActns, System.Actions, Vcl.ActnList,
   Vcl.PlatformDefaultStyleActnCtrls, Vcl.ActnMan, DBLookupEh, Data.DB,
   Vcl.DBCtrls, ToolCtrlsEh, Vcl.ComCtrls, math, StrUtils, Vcl.ExtCtrls,
-  Vcl.ImgList;
+  Vcl.ImgList, System.ImageList;
 
 type
   TsyEditDialog = class(TForm)

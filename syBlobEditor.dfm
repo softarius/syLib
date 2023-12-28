@@ -3,8 +3,8 @@ object dlgFormEditor: TdlgFormEditor
   Top = 0
   BorderStyle = bsNone
   Caption = #1056#1077#1076#1072#1082#1090#1086#1088' '#1087#1086#1083#1103
-  ClientHeight = 320
-  ClientWidth = 434
+  ClientHeight = 312
+  ClientWidth = 207
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -14,14 +14,13 @@ object dlgFormEditor: TdlgFormEditor
   KeyPreview = True
   OldCreateOrder = False
   OnClose = FormClose
-  OnKeyDown = FormKeyDown
   PixelsPerInch = 96
   TextHeight = 13
   object DBMemo1: TDBMemo
     Left = 0
     Top = 0
-    Width = 368
-    Height = 320
+    Width = 141
+    Height = 312
     Align = alClient
     Font.Charset = RUSSIAN_CHARSET
     Font.Color = clWindowText
@@ -31,14 +30,18 @@ object dlgFormEditor: TdlgFormEditor
     ParentFont = False
     ScrollBars = ssBoth
     TabOrder = 0
+    ExplicitWidth = 368
+    ExplicitHeight = 320
   end
   object Panel1: TPanel
-    Left = 368
+    Left = 141
     Top = 0
     Width = 66
-    Height = 320
+    Height = 312
     Align = alRight
     TabOrder = 1
+    ExplicitLeft = 368
+    ExplicitHeight = 320
     object Button1: TButton
       Left = 6
       Top = 14
@@ -58,7 +61,7 @@ object dlgFormEditor: TdlgFormEditor
       Cancel = True
       Caption = #1054#1090#1084#1077#1085#1072
       ImageIndex = 2
-      ModalResult = 1
+      ModalResult = 2
       TabOrder = 1
     end
   end

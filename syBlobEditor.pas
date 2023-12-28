@@ -18,7 +18,6 @@ type
     DataSetPost1: TDataSetPost;
     DataSetCancel1: TDataSetCancel;
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
-    procedure FormKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
   private
     { Private declarations }
   public
@@ -41,7 +40,8 @@ begin
 
   with dlgFormEditor do
   begin
-    Width := aColumn.Width+Panel1.Width;
+    //Width := aColumn.Width+Panel1.Width;
+
     DBMemo1.Font.Assign(aColumn.Grid.Font);
     DBMemo1.DataSource := aColumn.Grid.DataSource;
     DataSetPost1.DataSource := aColumn.Grid.DataSource;
@@ -50,6 +50,7 @@ begin
     ShowModal;
   end;
 end;
+
 procedure EditBlob(aGrid: TdbGridEh); overload;
 begin
   EditBlob(aGrid.Columns[aGrid.SelectedIndex])
@@ -59,13 +60,6 @@ end;
 procedure TdlgFormEditor.FormClose(Sender: TObject; var Action: TCloseAction);
 begin
   Action := caFree;
-end;
-
-procedure TdlgFormEditor.FormKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
-begin
-  if Key = VK_ESCAPE then
-    Button2.Click;
-
 end;
 
 end.
