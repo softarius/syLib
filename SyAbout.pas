@@ -79,8 +79,10 @@ begin
     end;
 
     lblProductName.caption := ProductName;
+    lblProductName.Hint :=  GetCustomKeyValue('ProductPage');
     lblCopyright.caption := Copyright;
     lblVersion.caption := FileVersion;
+
     // MD5Label.caption := MD5OfFile(Application.ExeName);     MD5Label.Show;
     { lblProductName.Hint := Values['ProductPage'];
       lCompanyMail.caption := Values['CompanyMail'];

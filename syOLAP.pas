@@ -43,7 +43,6 @@ type
     Splitter3: TSplitter;
     DBMemo1: TDBMemo;
     ToolBar2: TToolBar;
-    DBNavigator2: TDBNavigator;
     ImageList1: TImageList;
     ActionManager1: TActionManager;
     aSaveShemaToBLOB: TAction;
@@ -54,7 +53,6 @@ type
     PopupMenu1: TPopupMenu;
     N1: TMenuItem;
     ToolButton1: TToolButton;
-    ToolButton2: TToolButton;
     aGridView: TAction;
     EditCut1: TEditCut;
     fcxDataSource1: TfcxDataSource;

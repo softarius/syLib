@@ -112,25 +112,8 @@ object frmOLAP: TfrmOLAP
         Caption = 'ToolBar2'
         Images = ImageList1
         TabOrder = 1
-        object DBNavigator2: TDBNavigator
-          Left = 0
-          Top = 0
-          Width = 120
-          Height = 22
-          DataSource = DataSource2
-          VisibleButtons = [nbInsert, nbDelete, nbEdit, nbPost, nbCancel, nbRefresh]
-          TabOrder = 0
-        end
-        object ToolButton2: TToolButton
-          Left = 120
-          Top = 0
-          Width = 8
-          Caption = 'ToolButton2'
-          ImageIndex = 1
-          Style = tbsSeparator
-        end
         object ToolButton1: TToolButton
-          Left = 128
+          Left = 0
           Top = 0
           Action = aGridView
         end
@@ -266,8 +249,6 @@ object frmOLAP: TfrmOLAP
         StatusZone.IntegerFormat.FormatStr = '#0.##'
         StatusZone.IntegerFormat.Kind = fkNumeric
         FieldsZone.Visible = True
-        ExplicitTop = 64
-        ExplicitHeight = 512
       end
       object fcxSliceGridToolbar1: TfcxSliceGridToolbar
         Left = 0

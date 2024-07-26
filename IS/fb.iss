@@ -444,6 +444,11 @@ end;
  #if Privileges == "user"
 Source: {#MyFirebirdDir}\fbclient.dll; DestDir: {app}; Components: client\fbclient;  Flags: onlyifdoesntexist; 
 Source: {#MyFirebirdDir}\firebird.msg; DestDir: {app}; Components: client\fbclient;  Flags: onlyifdoesntexist; 
+
+; MS2010 redist
+Source: {#MyFirebirdDir}\msvcp100.dll; DestDir: {app}; Components: client\fbclient;  Flags: onlyifdoesntexist; 
+Source: {#MyFirebirdDir}\msvcr100.dll; DestDir: {app}; Components: client\fbclient;  Flags: onlyifdoesntexist; 
+
    #else  
 Source: {#MyFirebirdDir}\fbclient.dll; DestDir: {sys}; Components: client\fbclient; Flags: sharedfile uninsneveruninstall onlyifdoesntexist 
 Source: {#MyFirebirdDir}\firebird.msg; DestDir: {code:GetFirebirdDir}; Components: client\fbclient; Flags: sharedfile uninsneveruninstall onlyifdoesntexist 
