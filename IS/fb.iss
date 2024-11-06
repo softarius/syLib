@@ -86,8 +86,8 @@ begin
     begin
     if pos(':',dbName)>2 then
     begin
-    HostEdit.Text:=copy(dbName,1,pos(':',dbName)-1);
-    dbEdit.Text:=copy(dbName,pos(':',dbName)+1,256); 
+      HostEdit.Text:=copy(dbName,1,pos(':',dbName)-1);
+      dbEdit.Text:=copy(dbName,pos(':',dbName)+1,256); 
     end else dbEdit.Text:= dbName; 
     end;  
 //   if RegQueryStringValue(HKEY_CURRENT_USER, 'Software\FIBC_Software\Aliases\'+ExpandConstant('{#ExeName}'),
