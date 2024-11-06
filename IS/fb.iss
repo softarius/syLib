@@ -1,4 +1,4 @@
-#define MyFirebirdDir 'C:\Program Files (x86)\Firebird\Firebird_3_0\'
+#define MyFirebirdDir 'C:\Distr\Firebird-3.0'
 #define FireBirdDir "{GetFirebirdDir}"
 
 #define FBEmbeded='"C:\Program Files (x86)\Firebird\Firebird_3_0\"'
