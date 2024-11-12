@@ -34,7 +34,7 @@ type
     procedure DatasetDelete1Update(Sender: TObject);
     procedure ДокументироватьExecute(Sender: TObject);
   protected
-
+    procedure OpenAll; virtual;
     procedure DBGridEh1ColWidthsChanged(Sender: TObject);
     procedure DBGetBtnParams(Sender: TObject; Column: TColumnEh; AFont: TFont;
       var Background: TColor; var SortMarker: TSortMarkerEh; IsDown: Boolean);
@@ -366,6 +366,11 @@ begin
 
 end;
 
+
+procedure TsyChildForm.OpenAll;
+begin
+
+end;
 
 procedure TsyChildForm.ДокументироватьExecute(Sender: TObject);
 var
