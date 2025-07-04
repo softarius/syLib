@@ -32,6 +32,10 @@
       Action = Документировать
       Visible = False
     end
+    object aDatasetReopen1: TMenuItem
+      Action = aDatasetReopen
+      Caption = #1055#1077#1088#1077#1095#1080#1090#1072#1090#1100
+    end
   end
   object CommonActionManager: TActionManager
     Images = CommonImageList
@@ -71,6 +75,12 @@
       Caption = #1044#1086#1082#1091#1084#1077#1085#1090#1080#1088#1086#1074#1072#1090#1100
       ShortCut = 16452
       OnExecute = ДокументироватьExecute
+    end
+    object aDatasetReopen: TAction
+      Category = 'Dataset'
+      Caption = 'aDatasetReopen'
+      ShortCut = 116
+      OnExecute = aDatasetReopenExecute
     end
   end
   object CommonImageList: TImageList

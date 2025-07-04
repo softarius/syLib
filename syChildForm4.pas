@@ -29,10 +29,13 @@ type
     commonCopy: TMenuItem;
     Документировать: TAction;
     miTitlesCopy: TMenuItem;
+    aDatasetReopen: TAction;
+    aDatasetReopen1: TMenuItem;
     procedure aClonRecordExecute(Sender: TObject);
     procedure aClonRecordUpdate(Sender: TObject);
     procedure DatasetDelete1Update(Sender: TObject);
     procedure ДокументироватьExecute(Sender: TObject);
+    procedure aDatasetReopenExecute(Sender: TObject);
   protected
     procedure OpenAll; virtual;
     procedure DBGridEh1ColWidthsChanged(Sender: TObject);
@@ -98,6 +101,27 @@ begin
           aClonRecord.Enabled := TpFIBDataSet(DataSource.DataSet).CanInsert and
             (alopInsertEh in AllowedOperations) and
             (ukInsert in TpFIBDataSet(DataSource.DataSet).AllowedUpdateKinds);
+end;
+
+procedure TsyChildForm.aDatasetReopenExecute(Sender: TObject);
+var
+  kf: string;
+begin
+  if Assigned(GridPopupMenu.PopupComponent) then
+    with GridPopupMenu.PopupComponent as TDBGridEh do
+      if Assigned(DataSource) and Assigned(DataSource.DataSet) then
+
+        if DataSource.DataSet is TpFIBDataSet then
+        with  TpFIBDataSet(DataSource.DataSet) do
+        begin
+
+          if AutoUpdateOptions.KeyFields <> '' then
+            kf := AutoUpdateOptions.KeyFields
+          else
+            kf := Fields[0].FieldName;
+
+          ReopenLocate(kf);
+        end;
 end;
 
 procedure TsyChildForm.Activate;
@@ -363,9 +387,7 @@ begin
   inherited;
   // WindowState := wsMaximized;
 
-
 end;
-
 
 procedure TsyChildForm.OpenAll;
 begin

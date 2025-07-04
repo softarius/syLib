@@ -5,7 +5,7 @@ interface
 uses
   Windows, Forms, SysUtils, Classes, ActnList, ActnMan, menus, Graphics,
   ImgList,
-  ComCtrls, ibase, FibDatabase, frxClass, syUtils,
+  ComCtrls, ibase, FibDatabase, frxClass, syUtils, syLog,
   pFIBDataSet;
 
 type
@@ -87,19 +87,20 @@ var
   aSetReport: TSetReport;
   i: integer;
 begin
-   for i := 0 to Application.MainForm.MDIChildCount - 1 do
-    begin
-       if Application.MainForm.MDIChildren[i].Caption = (Sender as TAction).Caption
-      then
-        begin
-        Application.MainForm.MDIChildren[i].BringToFront;
-        Exit;
-        end;
-    end;
-
-  if true {not(Sender as TAction).Checked} then // FIXME исправить реакцию на повторный вызов модуля
+  for i := 0 to Application.MainForm.MDIChildCount - 1 do
   begin
-    //(Sender as TAction).Checked := true;
+    if Application.MainForm.MDIChildren[i].Caption = (Sender as TAction).Caption
+    then
+    begin
+      Application.MainForm.MDIChildren[i].BringToFront;
+      Exit;
+    end;
+  end;
+
+  if true { not(Sender as TAction).Checked } then
+  // FIXME исправить реакцию на повторный вызов модуля
+  begin
+    // (Sender as TAction).Checked := true;
 
     // Inifile.WriteBool('Модули', (Sender as TAction).Caption, (Sender as TAction).Checked);
 
@@ -125,11 +126,9 @@ begin
   else
   begin
 
-
-
     { @fUpload := GetProcAddress(handle, 'Upload');
       fUpload;
-      FreeLibrary((Sender as TAction).Tag);  }
+      FreeLibrary((Sender as TAction).Tag); }
   end;
 end;
 
@@ -200,7 +199,10 @@ begin
   while not pl.Eof do
 {$REGION 'Перебираем модули'}
   begin
+
     handle := LoadLibrary(PChar(DirName + pl.Fields[0].AsString + '.dll'));
+    if handle = 0 then
+      //syLogMsg('Ошибка загрузки модуля ' + pl.Fields[0].AsString);
 {$REGION 'Загрузка плагина'}
     if handle > 0 then
     begin

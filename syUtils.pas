@@ -585,7 +585,7 @@ begin
   with TFIBQuery.Create(Application) do
   begin
     Database := (Column.grid.DataSource.DataSet as TpFIBDataSet).Database;
-    SQL.Text := Format('select distinct cast(%s as varchar(1000)) ' +
+    SQL.Text := Format('select distinct trim(cast(%s as varchar(1000))) ' +
       'from %s where %0:s is not null and %2:s order by 1 %3:s',
       [aFieldName, Table1, Where, OrderDir]);
 

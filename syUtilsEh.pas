@@ -131,12 +131,13 @@ var
   fds: TpFIBDataSet;
 
   function CreateGridMenuItem(aCaption: string; aOnClick: TNotifyEvent = nil;
-    aChecked: boolean = false; Glif: string = ''): TDBGridEhMenuItem;
+    aChecked: boolean = false; Glif: string = ''; aShortCut:string=''): TDBGridEhMenuItem;
   begin
     Result := TDBGridEhMenuItem.Create(Application);
     with Result do
     begin
       Caption := aCaption;
+      ShortCut:=TextToShortCut(aShortCut);
       OnClick := aOnClick;
       Checked := aChecked;
       Grid := AGrid;
