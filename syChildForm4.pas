@@ -1,5 +1,5 @@
 unit syChildForm4;
-
+
 interface
 
 uses
@@ -112,16 +112,16 @@ begin
       if Assigned(DataSource) and Assigned(DataSource.DataSet) then
 
         if DataSource.DataSet is TpFIBDataSet then
-        with  TpFIBDataSet(DataSource.DataSet) do
-        begin
+          with TpFIBDataSet(DataSource.DataSet) do
+          begin
 
-          if AutoUpdateOptions.KeyFields <> '' then
-            kf := AutoUpdateOptions.KeyFields
-          else
-            kf := Fields[0].FieldName;
+            if AutoUpdateOptions.KeyFields <> '' then
+              kf := AutoUpdateOptions.KeyFields
+            else
+              kf := Fields[0].FieldName;
 
-          ReopenLocate(kf);
-        end;
+            ReopenLocate(kf);
+          end;
 end;
 
 procedure TsyChildForm.Activate;
@@ -234,10 +234,11 @@ begin
             PopupMenu.Items.Insert(GridPopupMenu.Items.Count, mi); }
         end;
 
-        if IniFile.ReadBool('Сетки', 'Плоские', True) then
+        if IniFile.ReadBool('Сетки', 'Плоские', False) then
           GridLineParams.ColorScheme := glcsFlatEh;
 
         Font.Assign(Application.MainForm.Font);
+        Font.Size := IniFile.ReadInteger('Сетки', 'Размер шрифта', 8);
         IndicatorTitle.ShowDropDownSign := True;
         if RowDetailPanel.Active then
         begin
@@ -458,3 +459,4 @@ begin
 end;
 
 end.
+

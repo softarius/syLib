@@ -67,6 +67,7 @@ contains
   syUtilsEh in 'syUtilsEh.pas',
   syLib.PackageSplash in 'syLib.PackageSplash.pas',
   syLib.Buh1C in 'syLib.Buh1C.pas',
-  V82_TLB in 'V82_TLB.pas';
+  V82_TLB in 'V82_TLB.pas',
+  sylib.VCF in 'sylib.VCF.pas';
 
 end.
