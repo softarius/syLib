@@ -238,7 +238,7 @@ begin
           GridLineParams.ColorScheme := glcsFlatEh;
 
         Font.Assign(Application.MainForm.Font);
-        Font.Size := IniFile.ReadInteger('Сетки', 'Размер шрифта', 8);
+        Font.Size := IniFile.ReadInteger('Сетки', 'Размер шрифта', 10);
         IndicatorTitle.ShowDropDownSign := True;
         if RowDetailPanel.Active then
         begin
@@ -264,6 +264,7 @@ begin
 
         if not Assigned(OnGetBtnParams) then
           OnGetBtnParams := DBGetBtnParams;
+
         // ShowMessage(Parent.ClassName+Name);
         if (not Assigned(OnDblClick)) and
           (IniFile.ReadBool(Parent.ClassName + Name, 'Диалог', True)) then

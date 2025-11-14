@@ -321,6 +321,7 @@ begin
     'Банковская выписка') then
   begin
     dlgBankProgress := TdlgBankProgress.Create(self);
+    dlgBankProgress.ProgressBar1.Max := 0;
     dlgBankProgress.Show;
     AssignFile(f, FFileName);
     Reset(f);
@@ -341,12 +342,16 @@ begin
           CreanupDocument(d);
           d.ВидДокумента := val;
         end;
+
         if pos('ВсегоСписано=', s) = 1 then
         begin
 
-          dlgBankProgress.ProgressBar1.Max :=
+          dlgBankProgress.ProgressBar1.Max := dlgBankProgress.ProgressBar1.Max +
             round(StrToFloat(GetVal(ReplaceStr(s, '.',
             FormatSettings.DecimalSeparator))));
+
+          dlgBankProgress.Label2.Caption := FormatFloat('### ### ###.',
+            dlgBankProgress.ProgressBar1.Max);
         end;
 
         if pos('ВсегоПоступило=', s) = 1 then
@@ -355,8 +360,9 @@ begin
           dlgBankProgress.ProgressBar1.Max := dlgBankProgress.ProgressBar1.Max +
             round(StrToFloat(GetVal(ReplaceStr(s, '.',
             FormatSettings.DecimalSeparator))));
-          dlgBankProgress.Label2.Caption :=
-            IntToStr(dlgBankProgress.ProgressBar1.Max);
+
+          dlgBankProgress.Label2.Caption := FormatFloat('### ### ###.',
+            dlgBankProgress.ProgressBar1.Max);
         end;
 
         if pos('Номер=', s) = 1 then
@@ -437,9 +443,9 @@ begin
         begin
 
           d.Сумма :=
-            StrToFloat(GetVal(
-            ReplaceStr(
-            ReplaceStr(s, '.',FormatSettings.DecimalSeparator),',',FormatSettings.DecimalSeparator)));
+            StrToFloat(GetVal(ReplaceStr(ReplaceStr(s, '.',
+            FormatSettings.DecimalSeparator), ',',
+            FormatSettings.DecimalSeparator)));
 
         end;
 
@@ -449,8 +455,8 @@ begin
         //
 
         dlgBankProgress.ProgressBar1.StepBy(round(d.Сумма));
-        dlgBankProgress.Label1.Caption :=
-          FloatToStr(StrToFloat(dlgBankProgress.Label1.Caption) + d.Сумма);
+        dlgBankProgress.Label1.Caption := FormatFloat('### ### ###',
+          dlgBankProgress.ProgressBar1.Position);
         Application.ProcessMessages;
         if Assigned(FOnPayment) then
           FOnPayment(self, d);

@@ -18,15 +18,12 @@ type
     DataSource1: TDataSource;
     DataSource2: TDataSource;
     fdsDic: TpFIBDataSet;
-    Splitter1: TSplitter;
-    GroupBox1: TGroupBox;
-    DBGridEh2: TDBGridEh;
     GroupBox2: TGroupBox;
     DBGridEh1: TDBGridEh;
     ColorDialog1: TColorDialog;
-    DBEditEh1: TDBEditEh;
     fdsDicListTITLE: TFIBStringField;
     fdsDicListNAME: TFIBStringField;
+    DBGridEh3: TDBGridEh;
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure DataSource1DataChange(Sender: TObject; Field: TField);
     procedure DBGridEh1GetCellParams(Sender: TObject; Column: TColumnEh;

@@ -67,6 +67,9 @@ function SilentLogin(FIBDatabase: TpFIBDatabase): boolean;
 procedure ReportsFromBase(ParentMenuItem: TMenuItem; Handler: TNotifyEvent;
   aDatabase: TpFIBDatabase);
 
+function GetCount(fibDB: TFIBDataBase; Table: string; Field: string;
+  Value: string): integer;
+
 /// <summary> Заполнение списка из базы данных
 /// </summary>
 /// <param name="fibDB">База данных
@@ -103,9 +106,8 @@ function GetPicklistFromTable(fibDB: TFIBDataBase; aFieldName: string;
 /// </param>
 /// <param name="KeyListToo">Заполнять ли так же список ключевых значений
 /// </param>
-procedure FillAutolist(Column: TColumnEh; aFieldName: string;
-  Table1: string; Where: string = '1=1'; OrderDir: string = 'ASC';
-  KeyListToo: boolean = false);
+procedure FillAutolist(Column: TColumnEh; aFieldName: string; Table1: string;
+  Where: string = '1=1'; OrderDir: string = 'ASC'; KeyListToo: boolean = false);
 
 procedure ApplyHiddenConditions(aFibDataset: TFibDataset);
 procedure LoadReport(MenuItem: TComponent; pFIBDatabase1: TpFIBDatabase;
@@ -119,7 +121,7 @@ function DefineColor(dat: TDateTime): TColor;
 function GetRegistryIconHandle(FileName: string): HICON;
 function MD5OfFile(const FileName: string): string;
 function FormatFIO(F, I, O: string; Form: integer = -1): string;
-
+function FormatPhone(phone: int64): string;
 
 function GetVal(s: string; Separator: Char = '='): string;
 function IntegerInWords(N: integer; Female: boolean = false): string;
@@ -203,6 +205,12 @@ const
 implementation
 
 uses syChildForm4;
+
+function FormatPhone(phone: int64): string;
+begin
+  Result := IntToStr(phone);
+
+end;
 
 function Srok(aDate: Tdate; ToDate: Tdate; ShowDays: boolean = false): string;
 var
@@ -533,6 +541,22 @@ begin
   end;
 end;
 
+function GetCount(fibDB: TFIBDataBase; Table: string; Field: string;
+  Value: string): integer;
+begin
+  with TFIBQuery.Create(Application) do
+  begin
+    Database := fibDB;
+    SQL.Text := Format('select count(*) from %s where %s=''%s''',
+      [Table, Field, Value]);
+
+    ExecQuery;
+    Result := Fields[0].AsInteger;
+    Free;
+  end;
+
+end;
+
 function GetPicklistFromTable(fibDB: TFIBDataBase; aFieldName: string;
   Table1: string; PickList: TStrings; Where: string = '1=1';
   OrderDir: string = 'ASC'): string;
@@ -574,13 +598,13 @@ begin
   end;
 end;
 
-procedure FillAutolist(Column: TColumnEh; aFieldName: string;
-  Table1: string; Where: string = '1=1'; OrderDir: string = 'ASC';
-  KeyListToo: boolean = false);
+procedure FillAutolist(Column: TColumnEh; aFieldName: string; Table1: string;
+  Where: string = '1=1'; OrderDir: string = 'ASC'; KeyListToo: boolean = false);
 var
   v: string;
 begin
-  if aFieldName='' then aFieldName:=Column.FieldName;
+  if aFieldName = '' then
+    aFieldName := Column.fieldName;
 
   with TFIBQuery.Create(Application) do
   begin
@@ -606,10 +630,9 @@ begin
     free;
   end;
 
-  if KeyListToo then Column.Keylist.Assign(Column.PickList);
+  if KeyListToo then
+    Column.Keylist.Assign(Column.PickList);
 end;
-
-
 
 function FormatFIO(F, I, O: string; Form: integer): string;
 begin
@@ -779,7 +802,6 @@ begin
     try
       Database := aDatabase;
       SelectSQL.Text := Format('select * from ibe$reports r ' +
-
         'where IBE$REPORT_SOURCE is not null and r.ibe$report_parent_id=%d' +
         'and ((ibe$report_rights is null) or (current_user=''SYSDBA'')' +
         'or  (r.ibe$report_rights containing current_role))' +

@@ -1,7 +1,7 @@
 object frmDicEditor: TfrmDicEditor
   Left = 0
   Top = 0
-  Caption = 'frmDicEditor'
+  Caption = #1057#1083#1086#1074#1072#1088#1080
   ClientHeight = 553
   ClientWidth = 654
   Color = clBtnFace
@@ -18,69 +18,19 @@ object frmDicEditor: TfrmDicEditor
   OnShow = FormShow
   PixelsPerInch = 96
   TextHeight = 13
-  object Splitter1: TSplitter
-    Left = 254
-    Top = 0
-    Height = 553
-    ExplicitLeft = 263
-    ExplicitTop = 8
-    ExplicitHeight = 522
-  end
-  object GroupBox1: TGroupBox
-    Left = 257
-    Top = 0
-    Width = 397
-    Height = 553
-    Align = alClient
-    Caption = #1047#1085#1072#1095#1077#1085#1080#1103
-    TabOrder = 0
-    object DBGridEh2: TDBGridEh
-      Left = 2
-      Top = 15
-      Width = 393
-      Height = 536
-      Align = alClient
-      ColumnDefValues.Title.TitleButton = True
-      DataSource = DataSource2
-      DynProps = <>
-      Flat = True
-      FooterParams.Color = clWindow
-      IndicatorTitle.ShowDropDownSign = True
-      IndicatorTitle.TitleButton = True
-      OptionsEh = [dghFixed3D, dghHighlightFocus, dghClearSelection, dghAutoSortMarking, dghMultiSortMarking, dghTraceColSizing, dghIncSearch, dghPreferIncSearch, dghDialogFind, dghColumnResize, dghColumnMove, dghExtendVertLines]
-      RowDetailPanel.ActiveControl = DBGridEh2
-      TabOrder = 0
-      TitleParams.MultiTitle = True
-      OnGetBtnParams = DBGridEh2GetBtnParams
-      OnGetCellParams = DBGridEh1GetCellParams
-      object RowDetailData: TRowDetailPanelControlEh
-      end
-    end
-    object DBEditEh1: TDBEditEh
-      Left = -160
-      Top = 112
-      Width = 121
-      Height = 21
-      DynProps = <>
-      EditButtons = <>
-      ShowHint = True
-      TabOrder = 1
-      Text = 'DBEditEh1'
-      Visible = True
-    end
-  end
   object GroupBox2: TGroupBox
     Left = 0
     Top = 0
-    Width = 254
+    Width = 654
     Height = 553
-    Align = alLeft
+    Align = alClient
     Caption = #1057#1083#1086#1074#1072#1088#1100
-    TabOrder = 1
+    TabOrder = 0
+    ExplicitWidth = 254
     object DBGridEh1: TDBGridEh
       Left = 2
       Top = 15
-      Width = 250
+      Width = 650
       Height = 536
       Align = alClient
       AutoFitColWidths = True
@@ -92,11 +42,34 @@ object frmDicEditor: TfrmDicEditor
       HorzScrollBar.ExtraPanel.Visible = True
       HorzScrollBar.ExtraPanel.VisibleItems = [gsbiRecordsInfoEh, gsbiNavigator]
       OptionsEh = [dghFixed3D, dghHighlightFocus, dghClearSelection, dghIncSearch, dghPreferIncSearch, dghRowHighlight, dghDialogFind, dghColumnResize, dghColumnMove, dghExtendVertLines]
+      RowDetailPanel.Active = True
       RowDetailPanel.Height = 200
       RowDetailPanel.VertSizing = True
       TabOrder = 0
       OnGetCellParams = DBGridEh1GetCellParams
       object RowDetailData: TRowDetailPanelControlEh
+        object DBGridEh3: TDBGridEh
+          Left = 0
+          Top = 0
+          Width = 30
+          Height = 190
+          Align = alClient
+          ColumnDefValues.Title.TitleButton = True
+          DataSource = DataSource2
+          DynProps = <>
+          Flat = True
+          FooterParams.Color = clWindow
+          IndicatorTitle.ShowDropDownSign = True
+          IndicatorTitle.TitleButton = True
+          OptionsEh = [dghFixed3D, dghHighlightFocus, dghClearSelection, dghAutoSortMarking, dghMultiSortMarking, dghTraceColSizing, dghIncSearch, dghPreferIncSearch, dghDialogFind, dghColumnResize, dghColumnMove, dghExtendVertLines]
+          RowDetailPanel.ActiveControl = DBGridEh3
+          TabOrder = 0
+          TitleParams.MultiTitle = True
+          OnGetBtnParams = DBGridEh2GetBtnParams
+          OnGetCellParams = DBGridEh1GetCellParams
+          object RowDetailData: TRowDetailPanelControlEh
+          end
+        end
       end
     end
   end
@@ -113,6 +86,7 @@ object frmDicEditor: TfrmDicEditor
       'order by 1'
       '')
     Transaction = dm.pFIBTransaction1
+    Database = dm.db
     Left = 64
     Top = 376
     poSetRequiredFields = True
@@ -157,6 +131,7 @@ object frmDicEditor: TfrmDicEditor
     AutoUpdateOptions.AutoParamsToFields = True
     AutoUpdateOptions.UseReturningFields = [rfKeyFields]
     Transaction = dm.pFIBTransaction1
+    Database = dm.db
     AutoCommit = True
     DataSource = DataSource1
     Left = 464
