@@ -42,7 +42,7 @@ procedure ChildWindow(Sender: TObject; var aChildForm: TForm;
 function GetIconInfo: boolean;
 
 procedure AssignFont(aFont: Tfont);
-procedure LoadActionState(ActionList: TCustomActionList; CategoryName: string;
+procedure LoadActionState(ActionList: TCustomActionList; CategoryName: string='Окна';
   Inverse: boolean = false);
 procedure AdjustDropDownForm(AControl: TControl; HostControl: TControl);
 procedure CreateMenuFromDir(ParentMenuItem: TMenuItem; Handler: TNotifyEvent;
@@ -1331,7 +1331,7 @@ begin
         .Caption, (ActionList.Actions[I] as TAction).Checked);
 end;
 
-procedure LoadActionState(ActionList: TCustomActionList; CategoryName: string;
+procedure LoadActionState(ActionList: TCustomActionList; CategoryName: string='Окна';
   Inverse: boolean = false);
 var
   I: integer;

@@ -235,7 +235,9 @@ begin
         end;
 
         if IniFile.ReadBool('Сетки', 'Плоские', False) then
-          GridLineParams.ColorScheme := glcsFlatEh;
+          GridLineParams.ColorScheme := glcsFlatEh
+        else
+          GridLineParams.ColorScheme := glcsClassicEh;
 
         Font.Assign(Application.MainForm.Font);
         Font.Size := IniFile.ReadInteger('Сетки', 'Размер шрифта', 10);
@@ -271,7 +273,7 @@ begin
           OnDblClick := EditDlg;
 
         SearchPanel.Enabled := IniFile.ReadBool(Parent.ClassName + Name,
-          'Панель поиска', false);
+          'Панель поиска', False);
 
         if not Assigned(OnRowDetailPanelShow) then
           OnRowDetailPanelShow := DBGridEh1RowDetailPanelShow;
@@ -368,9 +370,9 @@ begin
   if Assigned(self.Action) then
     with TAction(self.Action) do
     begin
-      Checked := false;
+      Checked := False;
       try
-        IniFile.WriteBool(Category, Caption, false);
+        IniFile.WriteBool(Category, Caption, False);
       except
       end;
     end;
