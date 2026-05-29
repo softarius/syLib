@@ -22,16 +22,18 @@ type
   TNumString = array [1 .. 19] of string[12];
   TTroyka = array [1 .. 3] of Byte;
 
-  /// <summary>
-  /// ‘орматирование срока, прошедшего с указанной даты до текущей даты, в
-  /// годах и мес€цах
-  /// </summary>
-  /// <param name="aDate">
-  /// дата, с которой исчисл€етс€ срок
-  /// </param>
-  /// <returns>
-  /// строка, например '1 год 2 мес€ца'
-  /// </returns>
+function Duration(years: extended; ShowDays: boolean = false): string;
+
+/// <summary>
+/// ‘орматирование срока, прошедшего с указанной даты до текущей даты, в
+/// годах и мес€цах
+/// </summary>
+/// <param name="aDate">
+/// дата, с которой исчисл€етс€ срок
+/// </param>
+/// <returns>
+/// строка, например '1 год 2 мес€ца'
+/// </returns>
 function Srok(aDate: Tdate; ToDate: Tdate; ShowDays: boolean = false): string;
 
 function Lighter(Color: TColor; Percent: Byte): TColor;
@@ -42,8 +44,8 @@ procedure ChildWindow(Sender: TObject; var aChildForm: TForm;
 function GetIconInfo: boolean;
 
 procedure AssignFont(aFont: Tfont);
-procedure LoadActionState(ActionList: TCustomActionList; CategoryName: string='ќкна';
-  Inverse: boolean = false);
+procedure LoadActionState(ActionList: TCustomActionList;
+  CategoryName: string = 'ќкна'; Inverse: boolean = false);
 procedure AdjustDropDownForm(AControl: TControl; HostControl: TControl);
 procedure CreateMenuFromDir(ParentMenuItem: TMenuItem; Handler: TNotifyEvent;
   ClearChildred: boolean = false);
@@ -212,43 +214,80 @@ begin
 
 end;
 
-function Srok(aDate: Tdate; ToDate: Tdate; ShowDays: boolean = false): string;
-var
-  ys, ms: string;
-  y, m, D: integer;
-
+function YearsName(Y: smallint): string;
 begin
-  { if ToDate = 0 then
-    ToDate := Date; }
-
-  { if (aDate >= ToDate) or (aDate = 0) then
-    exit; }
-  ms := 'мес';
-  y := YearsBetween(aDate, ToDate);
-  m := MonthsBetween(IncYear(aDate, y), ToDate);
-
-  case y mod 10 of
+  case Y mod 10 of
     0:
-      ys := 'лет';
+      Result := 'лет';
     1:
-      ys := 'год';
+      Result := 'год';
     2, 3, 4:
-      ys := 'года';
+      Result := 'года';
     5, 6, 7, 8, 9:
-      ys := 'лет';
+      Result := 'лет';
   end;
 
-  if y mod 100 in [11, 12, 13, 14, 15, 16, 17, 18, 19] then
-    ys := 'лет';
-  if y > 0 then
-    Result := Format('%d %s', [y, ys]);
+  if Y mod 100 in [11, 12, 13, 14, 15, 16, 17, 18, 19] then
+    Result := 'лет';
+end;
+
+function DaysName(D: smallint): string;
+begin
+  case D mod 10 of
+    0:
+      Result := 'дней';
+    1:
+      Result := 'день';
+    2, 3, 4:
+      Result := 'дн€';
+    5, 6, 7, 8, 9:
+      Result := 'дней';
+  end;
+
+  if D mod 100 in [11, 12, 13, 14, 15, 16, 17, 18, 19] then
+    Result := 'дней';
+end;
+
+function Duration(years: extended; ShowDays: boolean = false): string;
+var
+  Y, m, D: integer;
+begin
+  Y := trunc(years);
+  if Y > 0 then
+    Result := format('%d %s', [Y, YearsName(Y)]);
+  m := trunc(frac(years) * ApproxDaysPerYear / ApproxDaysPerMonth);
   if m > 0 then
-    Result := trim(Result + Format(' %d %s', [m, ms]));
+    Result := trim(Result + format(' %d мес', [m]));
+
   if ShowDays then
   begin
-    D := DaysBetween(ToDate, IncMonth(IncYear(aDate, y), m));
+    D := round((years - (Y + m * ApproxDaysPerMonth / ApproxDaysPerYear)) *
+      ApproxDaysPerYear);
 
-    Result := Result + trim(Format(' %d дней', [D]));
+    Result := Result + format(' %d %s', [D, DaysName(D)]);
+  end;
+
+end;
+
+function Srok(aDate: Tdate; ToDate: Tdate; ShowDays: boolean = false): string;
+var
+  ms: string;
+  Y, m, D: integer;
+begin
+  ms := 'мес';
+  Y := YearsBetween(aDate, ToDate);
+  m := MonthsBetween(IncYear(aDate, Y), ToDate);
+
+
+  if Y > 0 then
+    Result := format('%d %s', [Y, YearsName(Y)]);
+  if m > 0 then
+    Result := trim(Result + format(' %d %s', [m, ms]));
+  if ShowDays then
+  begin
+    D := DaysBetween(ToDate, IncMonth(IncYear(aDate, Y), m));
+
+    Result := Result + format(' %d %s', [D, DaysName(D)]);
   end;
 end;
 
@@ -547,7 +586,7 @@ begin
   with TFIBQuery.Create(Application) do
   begin
     Database := fibDB;
-    SQL.Text := Format('select count(*) from %s where %s=''%s''',
+    SQL.Text := format('select count(*) from %s where %s=''%s''',
       [Table, Field, Value]);
 
     ExecQuery;
@@ -569,7 +608,7 @@ begin
   with q do
   begin
     Database := fibDB;
-    SQL.Text := Format('select distinct cast(%s as varchar(1000)) ' +
+    SQL.Text := format('select distinct cast(%s as varchar(1000)) ' +
       'from %s where %0:s is not null and %2:s order by 1 %3:s',
       [aFieldName, Table1, Where, OrderDir]);
 
@@ -594,7 +633,7 @@ begin
       Next;
     end;
 
-    free;
+    Free;
   end;
 end;
 
@@ -609,7 +648,7 @@ begin
   with TFIBQuery.Create(Application) do
   begin
     Database := (Column.grid.DataSource.DataSet as TpFIBDataSet).Database;
-    SQL.Text := Format('select distinct trim(cast(%s as varchar(1000))) ' +
+    SQL.Text := format('select distinct trim(cast(%s as varchar(1000))) ' +
       'from %s where %0:s is not null and %2:s order by 1 %3:s',
       [aFieldName, Table1, Where, OrderDir]);
 
@@ -627,7 +666,7 @@ begin
     if Column.PickList.Count = 0 then
       Column.PickList.Add(' ');
 
-    free;
+    Free;
   end;
 
   if KeyListToo then
@@ -638,9 +677,9 @@ function FormatFIO(F, I, O: string; Form: integer): string;
 begin
   case Form of
     - 1:
-      Result := Format('%s %s. %s.', [F, copy(I, 1, 1), copy(O, 1, 1)]);
+      Result := format('%s %s. %s.', [F, copy(I, 1, 1), copy(O, 1, 1)]);
     0:
-      Result := Format('%s %s %s', [F, I, O]);
+      Result := format('%s %s %s', [F, I, O]);
   end;
 end;
 
@@ -663,7 +702,7 @@ begin
     finally
 
     end;
-    free;
+    Free;
   end;
 
 end;
@@ -680,8 +719,8 @@ begin
   try
     Result := idmd5.HashStreamAsHex(fs);
   finally
-    fs.free;
-    idmd5.free;
+    fs.Free;
+    idmd5.Free;
   end;
 end;
 
@@ -723,7 +762,7 @@ begin
     end;
 
   finally
-    R.free;
+    R.Free;
   end;
 
   // передача хендлера иконки как рещультат выполнени€
@@ -769,7 +808,7 @@ begin
   begin
     try
       Database := aDatabase;
-      SelectSQL.Text := Format('select * from ibe$reports r ' +
+      SelectSQL.Text := format('select * from ibe$reports r ' +
         'where IBE$REPORT_SOURCE is not null and r.ibe$report_parent_id=%d' +
         'and ((ibe$report_rights is null) or (current_user=''SYSDBA'')' +
         'or  (r.ibe$report_rights containing current_role))' +
@@ -787,7 +826,7 @@ begin
       end;
       Close;
     finally
-      free;
+      Free;
     end;
   end;
 end;
@@ -801,7 +840,7 @@ begin
   begin
     try
       Database := aDatabase;
-      SelectSQL.Text := Format('select * from ibe$reports r ' +
+      SelectSQL.Text := format('select * from ibe$reports r ' +
         'where IBE$REPORT_SOURCE is not null and r.ibe$report_parent_id=%d' +
         'and ((ibe$report_rights is null) or (current_user=''SYSDBA'')' +
         'or  (r.ibe$report_rights containing current_role))' +
@@ -819,7 +858,7 @@ begin
       end;
       Close;
     finally
-      free;
+      Free;
     end;
   end;
 end;
@@ -854,7 +893,7 @@ begin
     if Showing then
       ShowReport;
   end;
-  TempDataSet.free;
+  TempDataSet.Free;
 end;
 
 function SaveReport(pFIBDatabase1: TpFIBDatabase; frxReport: TfrxReport;
@@ -877,7 +916,7 @@ begin
     name := pFIBDatabase1.QueryValue
       ('select IBE$REPORT_NAME from ibe$reports r where r.ibe$report_id=' +
       IntToStr(frxReport.Tag), 0);
-    if MessageDlg(Format('—охранить отчет в базе c номером %d и именем "%s"?',
+    if MessageDlg(format('—охранить отчет в базе c номером %d и именем "%s"?',
       [frxReport.Tag, frxReport.FileName]), mtConfirmation, [mbYes, mbNo], 0) = mrYes
     then
     begin
@@ -906,8 +945,8 @@ begin
           Result := True;
         end;
       finally
-        TempDataSet.free;
-        memStream.free;
+        TempDataSet.Free;
+        memStream.Free;
       end;
     end
     else
@@ -955,34 +994,34 @@ end;
 
 function BitmapToRegion(Bitmap: TBitmap): HRGN;
 var
-  X, y: integer;
+  X, Y: integer;
   XStart: integer;
   TransColor: TColor;
 begin
   TransColor := Bitmap.Canvas.Pixels[0, 0];
   Result := 0;
   with Bitmap do
-    for y := 0 to Height - 1 do
+    for Y := 0 to Height - 1 do
     begin
       X := 0;
       while X < Width do
       begin
         // ѕропускаем прозрачные точки
-        while (X < Width) and (Canvas.Pixels[X, y] = TransColor) do
+        while (X < Width) and (Canvas.Pixels[X, Y] = TransColor) do
           Inc(X);
         if X >= Width then
           Break;
         XStart := X;
         // ѕропускаем непрозрачные точки
-        while (X < Width) and (Canvas.Pixels[X, y] <> TransColor) do
+        while (X < Width) and (Canvas.Pixels[X, Y] <> TransColor) do
           Inc(X);
         // —оздаЄм новый пр€моугольный регион и добавл€ем его к
         // региону всей картинки
         if Result = 0 then
-          Result := CreateRectRgn(XStart, y, X, y + 1)
+          Result := CreateRectRgn(XStart, Y, X, Y + 1)
         else
-          CombineRgn(Result, Result, CreateRectRgn(XStart, y, X,
-            y + 1), RGN_OR);
+          CombineRgn(Result, Result, CreateRectRgn(XStart, Y, X,
+            Y + 1), RGN_OR);
       end;
     end;
 end;
@@ -1292,7 +1331,7 @@ begin
   PDelpta := AControl.ClientToScreen(Point(0, 0));
 
   AControl.Left := HostP.X;
-  AControl.Top := HostP.y + HostControl.Height;
+  AControl.Top := HostP.Y + HostControl.Height;
 
   if (AControl.Width > WorkArea.Right - WorkArea.Left) then
     AControl.Width := WorkArea.Right - WorkArea.Left;
@@ -1304,9 +1343,9 @@ begin
 
   if (AControl.Top + AControl.Height > WorkArea.Bottom) then
   begin
-    if (HostP.y - WorkArea.Top > WorkArea.Bottom - HostP.y - HostControl.Height)
+    if (HostP.Y - WorkArea.Top > WorkArea.Bottom - HostP.Y - HostControl.Height)
     then
-      AControl.Top := HostP.y - AControl.Height;
+      AControl.Top := HostP.Y - AControl.Height;
   end;
 
   if (AControl.Top < WorkArea.Top) then
@@ -1331,8 +1370,8 @@ begin
         .Caption, (ActionList.Actions[I] as TAction).Checked);
 end;
 
-procedure LoadActionState(ActionList: TCustomActionList; CategoryName: string='ќкна';
-  Inverse: boolean = false);
+procedure LoadActionState(ActionList: TCustomActionList;
+  CategoryName: string = 'ќкна'; Inverse: boolean = false);
 var
   I: integer;
 begin
@@ -1541,7 +1580,7 @@ if not Assigned(IniFile) then
 
 finalization
 
-IniFile.free;
+IniFile.Free;
 
 end.
 
