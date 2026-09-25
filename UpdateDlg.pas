@@ -59,6 +59,7 @@ begin
   begin
     // Application.Terminate;
     Application.MainForm.Close;
+    Sleep(1000);
     ShellExecute(GetDesktopWindow, '', PChar(DownloadFile),
       PChar('/silent /NOCANCEL'), nil, SW_SHOW);
   end

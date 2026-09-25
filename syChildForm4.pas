@@ -37,7 +37,7 @@ type
     procedure ДокументироватьExecute(Sender: TObject);
     procedure aDatasetReopenExecute(Sender: TObject);
   protected
-    procedure OpenAll; virtual;
+
     procedure DBGridEh1ColWidthsChanged(Sender: TObject);
     procedure DBGetBtnParams(Sender: TObject; Column: TColumnEh; AFont: TFont;
       var Background: TColor; var SortMarker: TSortMarkerEh; IsDown: Boolean);
@@ -53,7 +53,7 @@ type
 
     procedure Activate; override;
   public
-
+    procedure OpenAll; virtual;
     { Public declarations }
     constructor Create(AOwner: TComponent); override;
   end;
@@ -132,7 +132,7 @@ end;
 
 constructor TsyChildForm.Create(AOwner: TComponent);
 var
-  i, m, ic, c: Integer;
+  i, m, ic, c, cc: Integer;
   mi: TMenuItem;
   s, sum: cardinal;
   Statusbar: TComponent;
@@ -280,7 +280,10 @@ begin
 
         OnColumnMoved := DBGridEh1ColumnMoved;
         OnColWidthsChanged := DBGridEh1ColWidthsChanged;
-
+        for cc := 0 to Columns.Count - 1 do
+        begin
+          Columns[cc].MinWidth := IniFile.ReadInteger('Сетки','MinWidth', 20);
+        end;
         // TunelookupOKIN_Fields(Components[i]);
       end;
     end;

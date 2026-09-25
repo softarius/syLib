@@ -152,7 +152,7 @@ begin
   ulist.Clear;
   info := nil;
   dwRes := 0;
-  res := NetUserEnum({StringToPWide(HostName, d)} 'vuz', 0, FILTER_NORMAL_ACCOUNT,
+  res := NetUserEnum({StringToPWide(HostName, d)} 'iict.local', 0, FILTER_NORMAL_ACCOUNT,
     @info, 65536 * 256, @dwERead, @dwETotal, @dwRes);
   if (res <> NERR_SUCCESS) or (info = nil) then
     begin
